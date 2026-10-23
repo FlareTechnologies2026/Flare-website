@@ -366,3 +366,109 @@ tbody tr:last-child th,tbody tr:last-child td{border-bottom:0}
 /* ---- Homepage: fixed transparent header takes no space in flow ---- */
 /* Pull hero up so it starts at the very top under the transparent fixed header */
 .page-home .hero-immersive { margin-top: -72px }
+
+/* ================================================================
+   UX AUDIT FIXES
+   ================================================================ */
+
+/* 1. CONTRAST — buttons and links
+   --primary-500 (#FA4D12) white-on-orange = ~3.4:1 — fails AA.
+   Use --primary-700 (#BC3209) for all interactive surfaces. */
+.btn-primary { background: var(--primary-700) }
+.btn-primary:hover { background: #9e2907; box-shadow: var(--glow-flame) }
+a { color: var(--primary-700) }
+a:hover { color: #9e2907 }
+.text-link { color: var(--primary-700); border-bottom-color: var(--primary-100) }
+.text-link:hover { border-color: var(--primary-700) }
+.door-go { color: var(--primary-700) }
+.mega a:hover,.mega a[aria-current] { color: var(--primary-700) }
+.f-cols a:hover { color: var(--primary-700) }
+.crumbs a:hover { color: var(--primary-700) }
+.rel-list a:hover .rel-t { color: var(--primary-700) }
+.plan-n { color: var(--primary-700) }
+
+/* 2. TAP TARGETS — minimum 44px height on small interactive elements */
+.f-cols a { padding: 8px 0; line-height: 1.4; font-size: 14px }
+.mega a { padding: 10px 0 }
+.mega-foot a { padding: 8px 0; display: inline-block }
+.rel-list a { padding: 20px 0 }
+.f-contact a,.f-social a { display: inline-block; padding: 6px 0 }
+.text-link { padding: 2px 0 }
+.crumbs a { padding: 4px 2px }
+
+/* 3. FOOTER — less dense, slightly larger text */
+.f-cols { font-size: 14px }
+.f-bottom { font-size: 14px }
+.f-head { font-size: 14px; margin-bottom: 12px }
+
+/* 4. SCROLLYTELLING — reduce step height, raise inactive opacity */
+.scrolly-step { min-height: 20vh }          /* was 38vh — too tall, huge gaps */
+.js .scrolly-step { opacity: .7 }           /* was .35 — unreadable */
+.js .scrolly-step.on { opacity: 1 }
+.js .scrolly-loop .loop-node { opacity: .55 } /* was .35 */
+.js .scrolly-loop .loop-node.on { opacity: 1 }
+
+/* 5. HERO — commitment reducer line under CTA */
+.hero-commit {
+  font-size: 13.5px;
+  color: rgba(180,187,198,.8);
+  margin: 10px 0 20px;
+  letter-spacing: .01em;
+}
+
+/* 6. HERO PLAN CHIPS — one-line row */
+.hero-plans-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 4px 0 28px;
+}
+.hero-plan-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: var(--radius-pill);
+  background: rgba(255,255,255,.05);
+  font-size: 13px;
+}
+.hero-plan-name {
+  font-weight: 700;
+  color: #fff;
+}
+.hero-plan-plain {
+  color: rgba(180,187,198,.8);
+  font-weight: 400;
+}
+
+/* 7. HERO — scale down 3D loop on mobile so it doesn't overlap headline */
+@media (max-width: 900px) {
+  .hero-fallback { width: 90vw; right: -20vw; opacity: .25 }
+}
+
+/* 8. WHAT-WE-DO section (moved from FAQ) */
+.what-we-do { background: #fff }
+.what-we-do .split { align-items: start }
+
+/* 9. CASE STATS — raise caption size */
+.case-stats li { font-size: 12.5px }
+.case-stats strong { font-size: 20px }
+
+/* 10. Open first FAQ visually — arrow rotated */
+.faq[open] summary::after { transform: rotate(-135deg); top: 30px }
+
+/* 11. RESULTS section lead on dark */
+.results-dark .section-lead { color: var(--ink-400) }
+
+/* 12. MARQUEE — ensure it loops on all screen sizes, fix clip */
+.marquee-band { overflow: hidden }
+.marquee ul { flex-shrink: 0 }
+
+/* Mobile adjustments for new hero elements */
+@media (max-width: 600px) {
+  .hero-commit { font-size: 12.5px }
+  .hero-plans-row { gap: 6px }
+  .hero-plan-chip { font-size: 12px; padding: 5px 10px }
+  .scrolly-step { min-height: 16vh }
+}

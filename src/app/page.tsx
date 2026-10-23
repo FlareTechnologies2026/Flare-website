@@ -10,27 +10,41 @@ import HeroStage from '@/components/HeroStage'
 import { SYSTEM_STEPS } from '@/lib/content'
 
 export const metadata: Metadata = {
-  title: 'Flare Technologies | B2B Lead Generation & Growth Team',
-  description: 'We run your sales and marketing as one system: ICP research, LinkedIn, SEO, ads and a sales team that books qualified meetings in your calendar.',
+  title: 'Flare Technologies | B2B Lead Generation & Growth Team — India, UAE & US',
+  description: 'We book qualified sales meetings for B2B companies in India, the UAE and the US. Flare finds your buyers, runs outreach and ads, and our sales team puts meetings in your calendar.',
 }
 
 const labels = SYSTEM_STEPS.map(([t]) => t)
 
+// Plan names in no-ad-spend-first order with plain-English descriptions
 const plans = [
-  { name: 'Outreach Engine', desc: 'Meetings without ad spend: ICP, lists, LinkedIn, outreach and our sales team.' },
-  { name: 'Outreach + Ads', desc: 'Everything in Outreach Engine, plus Google, Meta, LinkedIn and ChatGPT ads.' },
-  { name: 'Full Growth System', desc: 'Sales and marketing fully run: plus SEO, content, social, founder brand and consulting.' },
+  {
+    name: 'Outreach Engine',
+    plain: 'No ad spend',
+    desc: 'Meetings from LinkedIn, email and our sales team only. No ad budget needed.',
+  },
+  {
+    name: 'Outreach + Ads',
+    plain: 'With paid ads',
+    desc: 'Everything in Outreach Engine, plus Google, Meta, LinkedIn and ChatGPT ads for more volume.',
+  },
+  {
+    name: 'Full Growth System',
+    plain: 'Fully managed',
+    desc: 'Sales, marketing and growth run end to end — outreach, ads, SEO, content, social and consulting.',
+  },
 ]
 
 const industries = ['B2B SaaS & AI','Cybersecurity','Fintech & remittance','Construction & interiors','Real estate','Manufacturing','Trade & logistics','Food & FMCG','Beauty & wellness','Consumer apps']
 
+// First FAQ open by default — moved "What does Flare do?" to top and marked open
 const homeFaqs: [string, string][] = [
-  ['What does Flare Technologies do?', 'Flare runs sales and marketing for B2B companies as one system. We research your ideal customer, build lead lists, fix your LinkedIn and website, run outreach and ads, and our sales team books qualified meetings for you. We also build custom software, apps and ERP systems through Custom Development.'],
-  ['Is Flare an agency or a sales team?', 'Both, working as one. Our marketers make you visible and trusted, and our sales team talks to your prospects directly and books calls. You get one team and one report instead of three vendors who never speak to each other.'],
-  ['Do I have to run paid ads?', 'No. Many clients choose the Outreach Engine plan, which uses LinkedIn, email and our sales team with no ad spend. You can add Google, Meta, LinkedIn or ChatGPT ads later if you want more volume.'],
-  ['Which countries do you work in?', 'We work with clients across India, the UAE and the US, and we can target buyers in any country where your customers are. Our team is based in Bengaluru, India.'],
-  ['Which industries do you work with?', 'Most of our work is B2B: SaaS and AI, fintech, construction and interiors, real estate, manufacturing, and trade and logistics. We also run campaigns for consumer brands in food, beauty and apps.'],
-  ['How do I get started?', 'Book a strategy call. In 30 minutes we look at your current pipeline, tell you which plan fits, and send a written proposal within two working days.'],
+  ['What does Flare Technologies do?', 'Flare runs sales and marketing for B2B companies in India, the UAE and the US as one system. We find your ideal buyers, build verified lead lists, fix your LinkedIn and website for SEO, run outreach and ads, and our in-house sales team books qualified meetings straight into your calendar. We also build custom software, mobile apps and ERP systems through our Custom Development team.'],
+  ['Is Flare an agency or a sales team?', 'Both, working as one. Our marketers make you visible and trusted online, and our sales team speaks to your prospects directly and books calls. You get one team and one monthly report instead of three vendors who never talk to each other.'],
+  ['What do "ICP", "pipeline" and "outreach" mean?', 'ICP (Ideal Customer Profile) is a description of the companies and roles most likely to buy from you. Pipeline is the list of potential deals in progress. Outreach means sending personalised LinkedIn messages and emails to start conversations with the right people.'],
+  ['Do I have to run paid ads?', 'No. The Outreach Engine plan uses LinkedIn, email and our sales team with zero ad spend. You can add Google, Meta, LinkedIn or ChatGPT ads at any time.'],
+  ['Which countries do you work in?', 'We work with clients across India, the UAE and the US, and can target buyers in any country where your customers are. Our team is based in Bengaluru, India.'],
+  ['How do I get started?', 'Book a 30-minute strategy call. We look at your current situation, recommend a plan, and send a written proposal within two working days — no commitment required.'],
 ]
 
 export default function HomePage() {
@@ -38,38 +52,60 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Adds page-home class to body on client — no hydration mismatch */}
       <HomeClient />
 
-      {/* HERO */}
+      {/* ── HERO ── */}
       <section className="hero-immersive" aria-labelledby="home-h1">
         <HeroStage />
         <div className="hero-glow" aria-hidden="true" />
         <div className="wrap hero-imm-inner">
+
+          {/* Eyebrow — tells who it's for and where */}
           <p className="hero-kicker">
             <span className="live-dot" aria-hidden="true" />
-            Sales and marketing, run as one system
+            B2B sales and marketing — India, UAE &amp; US
           </p>
+
+          {/* H1 — clear outcome */}
           <h1 id="home-h1">
-            <span className="line">Your sales and</span>{' '}
-            <span className="line">marketing team,</span>{' '}
-            <span className="line">already built.</span>
+            <span className="line">We book qualified</span>{' '}
+            <span className="line">sales meetings for</span>{' '}
+            <span className="line">B2B companies.</span>
           </h1>
-          <p className="lead">Flare runs the whole system that keeps your pipeline full: finding the right buyers, getting you found online, running ads and outreach, and a real sales team that books meetings for you. You focus on closing and delivering.</p>
+
+          {/* Subhead — explains how */}
+          <p className="lead">
+            Flare finds your buyers, runs LinkedIn, email and ads, and our sales team puts qualified meetings in your calendar. You close the deals.
+          </p>
+
+          {/* CTA + commitment-reducer */}
           <div className="hero-actions">
             <Link className="btn btn-primary btn-lg magnetic" href="/contact/">Book a strategy call</Link>
-            <a className="btn btn-glass btn-lg" href="#system">See how the system works</a>
+            <a className="btn btn-glass btn-lg" href="#system">See how it works</a>
           </div>
+          <p className="hero-commit">30 minutes &middot; we review your pipeline &middot; written proposal within two working days</p>
+
+          {/* Plan names — one-line row, no-ad-spend first */}
+          <div className="hero-plans-row" aria-label="Plans">
+            {plans.map((p, i) => (
+              <span key={i} className="hero-plan-chip">
+                <span className="hero-plan-name">{p.name}</span>
+                <span className="hero-plan-plain">{p.plain}</span>
+              </span>
+            ))}
+          </div>
+
+          {/* Stats — removed "19 products" (moved to Custom Dev section) */}
           <ul className="proof-row on-dark">
             <li><strong data-count="260" data-suffix="+">260+</strong> qualified leads in 45 days for SlashLLM</li>
-            <li><strong data-count="19">19</strong> products built by our development team</li>
-            <li><strong data-count="3" data-suffix=" markets">3 markets</strong> clients in India, the UAE and the US</li>
+            <li><strong data-count="6">6</strong> national consumer brands on retainer</li>
+            <li><strong data-count="3" data-suffix=" markets">3 markets</strong> India, the UAE and the US</li>
           </ul>
         </div>
         <a className="scroll-cue" href="#system" aria-label="Scroll to how the system works"><span /></a>
       </section>
 
-      {/* MARQUEE */}
+      {/* ── INDUSTRIES MARQUEE ── */}
       <section className="marquee-band" aria-label="Industries we have worked in">
         <div className="marquee">
           <ul>{marquee}</ul>
@@ -77,23 +113,24 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* PROBLEM */}
-      <section className="section split-section" aria-labelledby="prob-h">
+      {/* ── WHAT WE DO — moved up from FAQ ── */}
+      <section className="section what-we-do" aria-labelledby="wwd-h">
         <div className="wrap split">
-          <h2 id="prob-h" className="reveal">Most founders are still the sales team, the marketing team and the product team.</h2>
+          <h2 id="wwd-h" className="reveal">One team. Sales, marketing and software — run as a system.</h2>
           <div className="reveal">
-            <p className="big">You hired a lead-gen vendor, an ad agency and a freelancer for the website. None of them talk to each other, the leads go cold, and you still chase every follow-up yourself.</p>
-            <p className="big">Flare replaces that patchwork with one system and one team. We find the buyers, make you visible where they look, start the conversations and book the meetings. <strong>You close and deliver.</strong></p>
+            <p className="big">Most founders hire a lead-gen vendor, an ad agency and an SEO freelancer who never talk to each other. The leads go cold. The follow-up never happens. You still chase everything yourself.</p>
+            <p className="big">Flare replaces that with one team that owns every step: finding the right buyers, making you visible online, running outreach and ads, and booking qualified meetings in your calendar. <strong>You close and deliver.</strong></p>
+            <p><Link className="text-link" href="/growth-system/">See how the Growth System works</Link></p>
           </div>
         </div>
       </section>
 
-      {/* SCROLLYTELLING */}
+      {/* ── HOW IT WORKS — scrollytelling ── */}
       <section className="scrolly" id="system" aria-labelledby="sys-h">
         <div className="wrap scrolly-grid">
           <div className="scrolly-sticky">
-            <h2 id="sys-h">How the Growth System works</h2>
-            <p className="section-lead">Seven steps, run by one team, repeated every month so your pipeline never runs dry.</p>
+            <h2 id="sys-h">Seven steps. One team. Repeated every month.</h2>
+            <p className="section-lead">Each step feeds the next. When one breaks, we fix it the same week — because one team owns all of it.</p>
             <figure className="scrolly-loop" aria-hidden="true">
               <LoopSvg labels={labels} id="scrolly" />
               <div className="scrolly-count">
@@ -115,7 +152,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* DOORS */}
+      {/* ── TWO WAYS WE HELP — doors ── */}
       <section className="section" aria-labelledby="doors-h">
         <div className="wrap wide">
           <h2 id="doors-h" className="reveal">Two ways we help</h2>
@@ -123,50 +160,51 @@ export default function HomePage() {
             <Link className="door door-grow spot" href="/growth-system/">
               <span className="door-k">Growth System</span>
               <span className="door-t">We run your sales and marketing</span>
-              <span className="door-d">Lead generation, LinkedIn, SEO and AI search, paid ads, social media, a sales team that books meetings, and sales consulting and training.</span>
+              <span className="door-d">Lead generation, LinkedIn, email, paid ads (Google, Meta, ChatGPT), SEO and AI search, social media, a sales team that books meetings, and monthly consulting.</span>
               <span className="door-go">Explore the Growth System</span>
             </Link>
             <Link className="door door-build spot" href="/custom-development/">
               <span className="door-k">Custom Development</span>
               <span className="door-t">We build your software</span>
-              <span className="door-d">Web and mobile apps, MVPs, ERP implementation, AI automation and cloud, by a team with 7 years of experience and 19 products shipped.</span>
+              <span className="door-d">Web and mobile apps, MVPs, ERP, AI automation and cloud — by a team with 7 years of experience and 19 products shipped across fintech, enterprise and consumer.</span>
               <span className="door-go">Explore Custom Development</span>
             </Link>
           </div>
         </div>
       </section>
 
-      {/* PLANS */}
+      {/* ── PLANS ── */}
       <section className="section alt" aria-labelledby="plans-h">
         <div className="wrap wide">
-          <h2 id="plans-h" className="reveal">With ads, without ads, or fully run</h2>
-          <p className="section-lead">Some clients want direct outreach only. Some want ads alongside it. Every plan starts from the same foundation.</p>
+          <h2 id="plans-h" className="reveal">Three plans, starting from no ad spend</h2>
+          <p className="section-lead">Every plan starts from the same foundation — ICP research, verified lists, LinkedIn fixes, and a sales team that books meetings. You pick how much to layer on top.</p>
           <ol className="plans">
             {plans.map((p, i) => (
               <li key={i} className="spot">
-                <span className="plan-n">Plan {i + 1}</span>
+                <span className="plan-n">{p.plain}</span>
                 <h3>{p.name}</h3>
                 <p>{p.desc}</p>
               </li>
             ))}
           </ol>
-          <p><Link className="text-link" href="/growth-system/">See what each plan includes</Link></p>
+          <p><Link className="text-link" href="/growth-system/">See exactly what each plan includes</Link></p>
         </div>
       </section>
 
-      {/* RESULTS */}
+      {/* ── RESULTS ── */}
       <section className="section dark results-dark" aria-labelledby="res-h">
         <div className="wrap wide">
           <h2 id="res-h" className="reveal">Results we can show you</h2>
+          <p className="section-lead" style={{color:'var(--ink-400)'}}>One result stands out for B2B lead generation. The others show the range of what the team does.</p>
           <CasesSection limit={3} />
           <p><Link className="text-link light" href="/case-studies/">See all case studies</Link></p>
         </div>
       </section>
 
-      {/* FAQs */}
-      <FaqSection faqs={homeFaqs} />
+      {/* ── FAQs — first one open by default ── */}
+      <FaqSection faqs={homeFaqs} firstOpen />
 
-      {/* CTA */}
+      {/* ── CTA ── */}
       <CtaBand />
     </>
   )
