@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { CASES } from '@/lib/content'
 
 interface Props {
@@ -12,9 +13,25 @@ export default function CasesSection({ limit }: Props) {
     <div className="cases">
       {items.map((c, i) => (
         <article key={i} className="case">
-          <p className="case-sector">{c.sector} · {c.client}</p>
+          {/* Sector + client name row with optional logo */}
+          <div className="case-header">
+            {c.logo && (
+              <div className="case-logo">
+                <Image
+                  src={c.logo}
+                  alt={`${c.client} logo`}
+                  width={160}
+                  height={40}
+                  style={{ objectFit: 'contain' }}
+                />
+              </div>
+            )}
+            <p className="case-sector">{c.sector} · {c.client}</p>
+          </div>
+
           <h3>{c.title}</h3>
           <p>{c.body}</p>
+
           <ul className="case-stats">
             {c.stats.map(([a, b], j) => (
               <li key={j}>
@@ -23,6 +40,7 @@ export default function CasesSection({ limit }: Props) {
               </li>
             ))}
           </ul>
+
           <Link className="text-link" href={`/${c.link}/`}>See the service behind it</Link>
         </article>
       ))}
