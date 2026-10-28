@@ -285,7 +285,7 @@ tbody tr:last-child th,tbody tr:last-child td{border-bottom:0}
 .hero-imm-inner{padding-block:120px 72px;width:100%;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;z-index:1}
 .hero-immersive h1{color:var(--ink-950);font-size:clamp(42px,6.6vw,92px);max-width:16ch;line-height:.98;margin:0 auto;text-align:center}
 .hero-immersive h1 .line{display:block;overflow:hidden}
-.hero-immersive .lead{color:var(--ink-800);max-width:54ch;margin:22px auto 0;text-align:center}
+.hero-immersive .lead{color:var(--ink-900);max-width:54ch;margin:22px auto 0;text-align:center}
 .hero-kicker{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:15px;color:var(--ink-700);padding:8px 14px;border:1px solid var(--ink-200);border-radius:var(--radius-pill);background:var(--ink-50);margin-bottom:26px}
 .live-dot{width:8px;height:8px;border-radius:50%;background:#34C283;box-shadow:0 0 0 0 rgba(52,194,131,.6);animation:ping 2s infinite}
 @keyframes ping{0%{box-shadow:0 0 0 0 rgba(52,194,131,.6)}80%,100%{box-shadow:0 0 0 10px rgba(52,194,131,0)}}
@@ -734,12 +734,12 @@ a:hover { color: #9e2907 }
 @media (max-width: 480px) {
   :root { --section-y: 48px; --gutter: 14px; }
 
-  /* Hero */
-  .hero-imm-inner { padding-block: 80px 48px; }
+  /* Hero — push content well below the fixed header (header=60px + gap) */
+  .hero-imm-inner { padding-block: 100px 52px; }
   .hero-immersive h1 { font-size: clamp(30px, 9vw, 44px); line-height: 1.05; }
-  .hero-immersive .lead { font-size: 15px; margin-top: 14px; }
+  .hero-immersive .lead { font-size: 15.5px; margin-top: 14px; color: var(--ink-950); }
   .hero-kicker { font-size: 13px; padding: 6px 12px; }
-  .hero-actions { flex-direction: column; gap: 10px; width: 100%; }
+  .hero-actions { flex-direction: column; gap: 10px; width: 100%; margin-top: 22px; }
   .hero-actions .btn { width: 100%; justify-content: center; }
   .hero-commit { font-size: 12px; }
   .hero-plans-row { gap: 6px; }
@@ -818,11 +818,13 @@ a:hover { color: #9e2907 }
 
   /* Hero */
   .hero-immersive h1 { font-size: clamp(28px, 8.5vw, 48px); }
-  .hero-imm-inner { padding-block: 88px 52px; }
+  .hero-imm-inner { padding-block: 96px 56px; }
+  .hero-immersive .lead { color: var(--ink-950); font-size: 15.5px; }
   .hero-actions .btn { min-width: 0; }
+  .hero-actions { margin-top: 20px; }
 
-  /* 3D canvas — hide on very small, too heavy + text overlap */
-  .hero-stage { opacity: .35; }
+  /* 3D canvas — very faint on mobile so text is clear */
+  .hero-stage { opacity: .2; }
 
   /* Nav */
   .header-row { min-height: 60px; }
@@ -860,8 +862,9 @@ a:hover { color: #9e2907 }
   .scrolly-step { min-height: auto; }
   .scrolly-count span:first-child { font-size: 36px; }
 
-  /* Page-home top margin for fixed header */
+  /* Page-home: account for 60px fixed header with padding instead of overlap */
   .page-home .hero-immersive { margin-top: -60px; }
+  .page-home .hero-imm-inner { padding-top: 116px; }
 }
 
 /* ── 768px tablets ─────────────────────────────────────────────── */
@@ -870,7 +873,8 @@ a:hover { color: #9e2907 }
 
   /* Hero */
   .hero-immersive h1 { font-size: clamp(32px, 7vw, 56px); }
-  .hero-stage { opacity: .5; }
+  /* 3D canvas — faint on tablet */
+  .hero-stage { opacity: .3; }
 
   /* Split / two-col */
   .two-col { grid-template-columns: 1fr; gap: 20px; }

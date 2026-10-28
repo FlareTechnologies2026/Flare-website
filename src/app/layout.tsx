@@ -12,7 +12,6 @@ export const metadata: Metadata = {
     images: ['/assets/og-image.png'],
   },
 }
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
