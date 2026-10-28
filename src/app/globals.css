@@ -725,3 +725,195 @@ a:hover { color: #9e2907 }
   opacity: 1;
   color: var(--ink-600);
 }
+
+/* ================================================================
+   MOBILE OPTIMISATION — comprehensive overhaul
+   ================================================================ */
+
+/* ── 480px and below (small phones) ───────────────────────────── */
+@media (max-width: 480px) {
+  :root { --section-y: 48px; --gutter: 14px; }
+
+  /* Hero */
+  .hero-imm-inner { padding-block: 80px 48px; }
+  .hero-immersive h1 { font-size: clamp(30px, 9vw, 44px); line-height: 1.05; }
+  .hero-immersive .lead { font-size: 15px; margin-top: 14px; }
+  .hero-kicker { font-size: 13px; padding: 6px 12px; }
+  .hero-actions { flex-direction: column; gap: 10px; width: 100%; }
+  .hero-actions .btn { width: 100%; justify-content: center; }
+  .hero-commit { font-size: 12px; }
+  .hero-plans-row { gap: 6px; }
+  .hero-plan-chip { font-size: 11.5px; padding: 5px 9px; }
+
+  /* Marquee — smaller pills on phone */
+  .marquee li { font-size: 13px; padding: 7px 13px; }
+
+  /* Sections */
+  h1 { font-size: clamp(28px, 8vw, 40px); }
+  h2 { font-size: clamp(22px, 6.5vw, 30px); }
+  h3 { font-size: 18px; }
+  .lead, .big { font-size: 15.5px; }
+  .section-lead { font-size: 15.5px; }
+  body { font-size: 15px; }
+
+  /* Cards — full width */
+  .plans { grid-template-columns: 1fr; }
+  .plans li { border-left: 0; border-top: 1px solid var(--ink-200); }
+  .plans li:first-child { border-top: 0; }
+  .doors { grid-template-columns: 1fr; }
+  .door { padding: 22px 18px; }
+  .door-t { font-size: 22px; }
+
+  /* Case cards */
+  .cases { grid-template-columns: 1fr; }
+  .case { padding: 20px 18px; }
+  .case h3 { font-size: 18px; }
+  .case-stats { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .case-stats strong { font-size: 18px; }
+
+  /* CTA band */
+  .cta-inner { padding: 28px 20px; grid-template-columns: 1fr; gap: 20px; }
+  .cta-inner h2 { font-size: 22px; }
+  .cta-actions .btn { width: 100%; justify-content: center; }
+
+  /* Footer */
+  .f-top { grid-template-columns: 1fr; gap: 28px; }
+  .f-cols { grid-template-columns: 1fr 1fr; gap: 20px 16px; }
+  .f-brand img { width: 120px; }
+  .site-footer { padding: 40px 0 24px; }
+
+  /* Contact */
+  .contact-grid { grid-template-columns: 1fr; }
+
+  /* Two-col / split */
+  .two-col, .split { grid-template-columns: 1fr; gap: 16px; }
+
+  /* Tables — scroll on mobile */
+  .table-wrap { font-size: 13px; }
+  table { font-size: 13px; }
+  th, td { padding: 10px 12px; }
+
+  /* Scrolly steps — much tighter */
+  .scrolly-step { min-height: auto; padding: 18px 0; gap: 12px; }
+  .scrolly-step h3 { font-size: 18px; }
+  .scrolly-step p { font-size: 15px; }
+  .scrolly-step .n { width: 36px; height: 36px; font-size: 14px; line-height: 32px; }
+
+  /* Work grid */
+  .work-grid { grid-template-columns: 1fr; gap: 20px; }
+  .work-item-name { font-size: 14px; }
+
+  /* Related */
+  .rel-list { grid-template-columns: 1fr; }
+  .rel-t { font-size: 16px; }
+
+  /* FAQs */
+  .faq summary h3 { font-size: 16px; }
+  .faq summary { padding: 16px 32px 16px 0; }
+}
+
+/* ── 600px and below (all phones) ─────────────────────────────── */
+@media (max-width: 600px) {
+  :root { --section-y: 52px; }
+
+  /* Hero */
+  .hero-immersive h1 { font-size: clamp(28px, 8.5vw, 48px); }
+  .hero-imm-inner { padding-block: 88px 52px; }
+  .hero-actions .btn { min-width: 0; }
+
+  /* 3D canvas — hide on very small, too heavy + text overlap */
+  .hero-stage { opacity: .35; }
+
+  /* Nav */
+  .header-row { min-height: 60px; }
+  .brand img { height: 34px; }
+
+  /* Sections */
+  .section { padding: var(--section-y) 0; }
+  .section-lead { margin-bottom: 20px; font-size: 16px; }
+
+  /* Includes sidebar — full width on mobile */
+  .hero-grid.has-aside { grid-template-columns: 1fr; }
+  .includes { margin-top: 8px; }
+
+  /* Plans */
+  .plans { grid-template-columns: 1fr; border-radius: var(--radius-md); }
+
+  /* Chips */
+  .chips li { font-size: 13.5px; padding: 7px 13px; }
+
+  /* Footer cols */
+  .f-cols { grid-template-columns: 1fr 1fr; }
+  .f-top { gap: 24px; }
+
+  /* CTA */
+  .cta-inner { grid-template-columns: 1fr; gap: 20px; border-radius: var(--radius-lg); }
+
+  /* Contact form */
+  .contact-form { padding: 22px 18px; border-radius: var(--radius-lg); }
+  .contact-grid { grid-template-columns: 1fr; gap: 28px; }
+
+  /* Work compact cards — 2 per row */
+  .cases-compact { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+
+  /* Scrolly */
+  .scrolly-step { min-height: auto; }
+  .scrolly-count span:first-child { font-size: 36px; }
+
+  /* Page-home top margin for fixed header */
+  .page-home .hero-immersive { margin-top: -60px; }
+}
+
+/* ── 768px tablets ─────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  :root { --section-y: 56px; }
+
+  /* Hero */
+  .hero-immersive h1 { font-size: clamp(32px, 7vw, 56px); }
+  .hero-stage { opacity: .5; }
+
+  /* Split / two-col */
+  .two-col { grid-template-columns: 1fr; gap: 20px; }
+  .split { grid-template-columns: 1fr; gap: 20px; }
+  .system-wrap { grid-template-columns: 1fr; }
+  .system-wrap .system-steps { grid-template-columns: 1fr 1fr; }
+
+  /* Contact */
+  .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+
+  /* Doors */
+  .doors { grid-template-columns: 1fr; }
+
+  /* CTA */
+  .cta-inner { grid-template-columns: 1fr; gap: 20px; padding: 32px 24px; }
+
+  /* Footer */
+  .f-top { grid-template-columns: 1fr; gap: 32px; }
+  .f-cols { grid-template-columns: repeat(2, 1fr); gap: 24px 16px; }
+
+  /* Cases */
+  .cases { grid-template-columns: 1fr; }
+  .case-stats { grid-template-columns: repeat(3, 1fr); }
+
+  /* Work grid */
+  .work-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+
+  /* Plans */
+  .plans { grid-template-columns: 1fr; }
+
+  /* Related */
+  .rel-list { grid-template-columns: 1fr; }
+}
+
+/* ── Safe area / notch support ─────────────────────────────────── */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .site-footer { padding-bottom: calc(28px + env(safe-area-inset-bottom)); }
+  .mobile-nav { padding-bottom: calc(24px + env(safe-area-inset-bottom)); }
+}
+
+/* ── Touch: remove hover effects that feel sticky ──────────────── */
+@media (hover: none) {
+  .door:hover { transform: none; }
+  .results-dark .case:hover { transform: none; }
+  .btn:active { transform: translateY(1px) scale(.98); }
+}
