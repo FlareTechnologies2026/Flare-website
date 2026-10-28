@@ -2,17 +2,20 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { CASES } from '@/lib/content'
+import type { CaseStudy } from '@/lib/caseStore'
 
 interface Props {
   limit?: number
+  items?: CaseStudy[]
 }
 
-export default function CasesSection({ limit }: Props) {
-  const items = limit ? CASES.slice(0, limit) : CASES
+export default function CasesSection({ limit, items }: Props) {
+  const source = items && items.length > 0 ? items : CASES.map((c, i) => ({ id: `static-${i}`, ...c }))
+  const list = limit ? source.slice(0, limit) : source
   return (
     <div className="cases">
-      {items.map((c, i) => (
-        <article key={i} className="case">
+      {list.map((c, i) => (
+        <article key={c.id ?? i} className="case">
           {/* Sector + client name row with optional logo */}
           <div className="case-header">
             {c.logo && (

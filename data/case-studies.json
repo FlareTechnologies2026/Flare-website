@@ -1,0 +1,62 @@
+[
+  {
+    "id": "case-slashllm",
+    "sector": "AI cybersecurity SaaS",
+    "client": "SlashLLM",
+    "logo": "/assets/slashllm.png",
+    "title": "260+ qualified CISO-level leads in 45 days",
+    "body": "We built an outbound system from zero for an AI security company: ICP, lists of security leaders, outreach and follow-up. The system went live in week one.",
+    "stats": [["260+", "qualified leads"], ["45 days", "to a full pipeline"], ["Week 1", "system live"]],
+    "link": "b2b-lead-generation-agency"
+  },
+  {
+    "id": "case-navaro",
+    "sector": "Trade tech and logistics",
+    "client": "Navaro",
+    "logo": "/assets/navaro.png",
+    "title": "Brand and growth foundation for a unified import-export platform",
+    "body": "An investor-ready brand, a 60-day growth playbook and a complete SEO foundation for a category-defining trade platform, delivered on a monthly retainer.",
+    "stats": [["60-day", "growth playbook"], ["7+", "deliverables in month one"], ["Ongoing", "monthly retainer"]],
+    "link": "growth-consulting"
+  },
+  {
+    "id": "case-nykaa",
+    "sector": "Consumer brands",
+    "client": "Nykaa, Sugar Cosmetics, Veet, Fast&Up, Chic Nutrix, Tencha",
+    "logo": "/assets/nykaa.png",
+    "title": "Creator-led content across 6 national consumer brands",
+    "body": "Flare works as an ongoing content partner for national consumer brands, producing authentic, conversion-focused content through a creator presence of 11,700+ followers.",
+    "stats": [["6", "national brands"], ["11,700+", "creator followers"], ["Ongoing", "partnership"]],
+    "link": "social-media-management"
+  },
+  {
+    "id": "case-cocacola",
+    "sector": "Enterprise systems",
+    "client": "Coca-Cola",
+    "logo": "/assets/cocacola.png",
+    "title": "A B2B beverage ordering app",
+    "body": "Our Custom Development team designed and built a B2B app for beverage ordering, one of 19 products the team has shipped.",
+    "stats": [["19", "products shipped"], ["7 years", "team experience"], ["B2B", "ordering app"]],
+    "link": "custom-development"
+  },
+  {
+    "id": "case-csg",
+    "sector": "Offshore company formation",
+    "client": "CSG Advisory",
+    "logo": "/assets/csg.png",
+    "title": "159K+ LinkedIn impressions in 90 days, up 2,173%",
+    "body": "We built a LinkedIn growth system from near zero for the director of a global business setup firm: profile positioning, content and consistent posting aimed at founders expanding internationally. Reach and followers grew steadily from the first weeks.",
+    "stats": [["159K+", "impressions in 90 days"], ["2,173%", "growth vs prior period"], ["1,300+", "new followers"]],
+    "link": "founder-personal-branding"
+  },
+  {
+    "id": "case-ailaunchpad",
+    "sector": "AI solutions & business automation",
+    "client": "AI Launchpad",
+    "logo": "/assets/ailaunchpad.png",
+    "title": "540+ new LinkedIn followers in 90 days, with outreach running in parallel",
+    "body": "We run an ongoing growth system for an AI solutions company: LinkedIn and Instagram content, Sales Navigator prospecting, personalised outreach and follow-up. The audience grew steadily every week while conversations with decision-makers were started alongside it.",
+    "stats": [["540+", "new followers in 90 days"], ["5,000+", "LinkedIn audience"], ["3 channels", "LinkedIn, Instagram, email"]],
+    "link": "linkedin-marketing-agency"
+  }
+]

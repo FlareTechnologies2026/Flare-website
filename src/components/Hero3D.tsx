@@ -121,7 +121,7 @@ export default function Hero3D({ children }: Props) {
           transparent: true, depthWrite: false, blending: THREE.AdditiveBlending
         }))
         group.add(pts)
-        group.scale.setScalar(0.88)
+        group.scale.setScalar(0.75)
 
         const dust = new THREE.BufferGeometry()
         const dp = new Float32Array(500 * 3)
@@ -139,8 +139,8 @@ export default function Hero3D({ children }: Props) {
           camera.aspect = w / h
           const wide = w / h >= 1.15
           camera.position.z = wide ? 10.5 : 14
-          ;(group.userData as Record<string, number>).baseX = wide ? Math.min(3.7, 1.8 + (w/h - 1.15) * 2.4) : 0
-          ;(group.userData as Record<string, number>).baseY = wide ? 0 : 1.2
+          ;(group.userData as Record<string, number>).baseX = 0
+          ;(group.userData as Record<string, number>).baseY = 0
           camera.updateProjectionMatrix()
         }
         const ro = new ResizeObserver(resize)

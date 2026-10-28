@@ -68,6 +68,7 @@ export default function Footer() {
         </div>
         <div className="f-bottom">
           <p>&copy; 2026 Flare Technologies. A brand of MS Digitflare IT Solutions (OPC) Private Limited.</p>
+          <a className="f-admin-link" href="/admin/" aria-label="Admin panel">Admin</a>
         </div>
       </div>
     </footer>

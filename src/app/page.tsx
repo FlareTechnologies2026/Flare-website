@@ -2,12 +2,12 @@ import React from 'react'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import LoopSvg from '@/components/LoopSvg'
-import CasesSection from '@/components/CasesSection'
+import CasesCompact from '@/components/CasesCompact'
 import CtaBand from '@/components/CtaBand'
 import FaqSection from '@/components/FaqSection'
 import HomeClient from '@/components/HomeClient'
 import HeroStage from '@/components/HeroStage'
-import { SYSTEM_STEPS } from '@/lib/content'
+import { SYSTEM_STEPS, CASES } from '@/lib/content'
 
 export const metadata: Metadata = {
   title: 'Flare Technologies | B2B Lead Generation & Growth Team — India, UAE & US',
@@ -68,14 +68,14 @@ export default function HomePage() {
 
           {/* H1 — clear outcome */}
           <h1 id="home-h1">
-            <span className="line">We book qualified</span>{' '}
-            <span className="line">sales meetings for</span>{' '}
-            <span className="line">B2B companies.</span>
+            <span className="line">Your Complete B2B</span>{' '}
+            <span className="line">Sales, Marketing &amp;</span>{' '}
+            <span className="line">Technology Growth Partner.</span>
           </h1>
 
           {/* Subhead — explains how */}
           <p className="lead">
-            Flare finds your buyers, runs LinkedIn, email and ads, and our sales team puts qualified meetings in your calendar. You close the deals.
+            From qualified lead generation and sales appointments to SEO, performance marketing, AI automation, and custom software development, Flare Technologies helps businesses attract, engage, and convert customers.
           </p>
 
           {/* CTA + commitment-reducer */}
@@ -95,12 +95,7 @@ export default function HomePage() {
             ))}
           </div>
 
-          {/* Stats — removed "19 products" (moved to Custom Dev section) */}
-          <ul className="proof-row on-dark">
-            <li><strong data-count="260" data-suffix="+">260+</strong> qualified leads in 45 days for SlashLLM</li>
-            <li><strong data-count="6">6</strong> national consumer brands on retainer</li>
-            <li><strong data-count="3" data-suffix=" markets">3 markets</strong> India, the UAE and the US</li>
-          </ul>
+          
         </div>
         <a className="scroll-cue" href="#system" aria-label="Scroll to how the system works"><span /></a>
       </section>
@@ -196,7 +191,7 @@ export default function HomePage() {
         <div className="wrap wide">
           <h2 id="res-h" className="reveal">Results we can show you</h2>
           <p className="section-lead" style={{color:'var(--ink-400)'}}>One result stands out for B2B lead generation. The others show the range of what the team does.</p>
-          <CasesSection limit={3} />
+          <CasesCompact items={CASES.slice(0,3).map((c,i)=>({id:`static-${i}`,...c}))} dark />
           <p><Link className="text-link light" href="/case-studies/">See all case studies</Link></p>
         </div>
       </section>
