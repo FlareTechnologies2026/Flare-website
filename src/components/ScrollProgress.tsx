@@ -76,6 +76,7 @@ export default function ScrollProgress() {
 
     function observeReveal() {
       document.querySelectorAll<HTMLElement>('.reveal,[data-count]').forEach(el => {
+        if (el.classList.contains('in')) return
         if (io) io.observe(el)
         else el.classList.add('in')
       })
@@ -122,8 +123,11 @@ export default function ScrollProgress() {
     attachSpotlight()
 
     // ---- magnetic button ----
-    if (!reduce && hoverable) {
+    function attachMagnetic() {
+      if (reduce || !hoverable) return
       document.querySelectorAll<HTMLElement>('.magnetic').forEach(b => {
+        if (b.dataset.magAttached) return
+        b.dataset.magAttached = '1'
         b.addEventListener('pointermove', (e: PointerEvent) => {
           const r = b.getBoundingClientRect()
           b.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * 0.15}px,${(e.clientY - r.top - r.height / 2) * 0.25}px)`
@@ -131,9 +135,24 @@ export default function ScrollProgress() {
         b.addEventListener('pointerleave', () => { b.style.transform = '' })
       })
     }
+    attachMagnetic()
 
     // Run once on mount to set initial state
     onScroll()
+
+    // This component lives in the layout and mounts once, so client-side navigation
+    // renders new .reveal / .spot / .magnetic elements it never saw. Pick them up.
+    let rescan = 0
+    const mo = new MutationObserver(() => {
+      cancelAnimationFrame(rescan)
+      rescan = requestAnimationFrame(() => {
+        observeReveal()
+        attachSpotlight()
+        attachMagnetic()
+        onScroll()
+      })
+    })
+    mo.observe(document.getElementById('main') ?? document.body, { childList: true, subtree: true })
 
     // Re-observe reveals after a short delay (catches elements rendered after hydration)
     const t = setTimeout(() => {
@@ -147,6 +166,8 @@ export default function ScrollProgress() {
       window.removeEventListener('resize', onScroll)
       toggle?.removeEventListener('click', menuHandler)
       clearTimeout(t)
+      cancelAnimationFrame(rescan)
+      mo.disconnect()
       io?.disconnect()
     }
   }, [])
