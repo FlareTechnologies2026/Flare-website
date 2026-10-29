@@ -294,9 +294,6 @@ tbody tr:last-child th,tbody tr:last-child td{border-bottom:0}
 .proof-row.on-dark{border-top-color:var(--ink-100);max-width:640px;margin-left:auto;margin-right:auto}
 .proof-row.on-dark li{color:var(--ink-600)}
 .proof-row.on-dark strong{color:var(--ink-950)}
-.scroll-cue{position:absolute;left:50%;bottom:28px;width:26px;height:42px;border:2px solid var(--ink-300);border-radius:14px;transform:translateX(-50%)}
-.scroll-cue span{position:absolute;left:50%;top:8px;width:4px;height:8px;border-radius:2px;background:var(--ink-500);transform:translateX(-50%);animation:cue 1.8s infinite}
-@keyframes cue{0%{opacity:0;transform:translate(-50%,0)}40%{opacity:1}100%{opacity:0;transform:translate(-50%,14px)}}
 @media (prefers-reduced-motion:no-preference){
   .js .hero-immersive h1 .line>*,.js .hero-immersive h1 .line{animation:rise .9s var(--ease-out) both}
   .js .hero-immersive h1 .line:nth-child(2){animation-delay:.08s}

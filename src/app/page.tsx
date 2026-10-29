@@ -6,7 +6,6 @@ import CasesCompact from '@/components/CasesCompact'
 import CtaBand from '@/components/CtaBand'
 import FaqSection from '@/components/FaqSection'
 import HomeClient from '@/components/HomeClient'
-import HeroStage from '@/components/HeroStage'
 import { SYSTEM_STEPS, CASES } from '@/lib/content'
 
 export const metadata: Metadata = {
@@ -56,7 +55,7 @@ export default function HomePage() {
 
       {/* ── HERO ── */}
       <section className="hero-immersive" aria-labelledby="home-h1">
-        <HeroStage />
+        {/* 3D loop hero (legacy): <HeroStage /> from '@/components/HeroStage' — disconnected, kept for reuse */}
         <div className="hero-glow" aria-hidden="true" />
         <div className="wrap hero-imm-inner">
 
@@ -97,7 +96,6 @@ export default function HomePage() {
 
           
         </div>
-        <a className="scroll-cue" href="#system" aria-label="Scroll to how the system works"><span /></a>
       </section>
 
       {/* ── INDUSTRIES MARQUEE ── */}
