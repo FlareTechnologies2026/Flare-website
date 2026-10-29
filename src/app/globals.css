@@ -361,8 +361,9 @@ tbody tr:last-child th,tbody tr:last-child td{border-bottom:0}
 }
 @media (max-width:600px){.scrolly-step h3{font-size:21px}.scrolly-count span:first-child{font-size:32px}}
 /* ---- Homepage: fixed transparent header takes no space in flow ---- */
-/* Pull hero up so it starts at the very top under the transparent fixed header */
-.page-home .hero-immersive { margin-top: -72px }
+/* Hero already starts at the top (header is out of flow); pad its content clear of the header (72px) */
+.page-home .hero-immersive { margin-top: 0 }
+.page-home .hero-imm-inner { padding-top: 128px }
 
 /* ================================================================
    UX AUDIT FIXES
@@ -866,8 +867,8 @@ a:hover { color: #9e2907 }
   .scrolly-count span:first-child { font-size: 36px; }
 
   /* Page-home: account for 60px fixed header with padding instead of overlap */
-  .page-home .hero-immersive { margin-top: -60px; }
-  .page-home .hero-imm-inner { padding-top: 116px; }
+  .page-home .hero-immersive { margin-top: 0; }
+  .page-home .hero-imm-inner { padding-top: 108px; }
 }
 
 /* ── 768px tablets ─────────────────────────────────────────────── */
