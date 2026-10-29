@@ -31,10 +31,10 @@ export default function ContactForm() {
     const form = formRef.current!
     const data = new FormData(form)
     try {
-      const r = await fetch('/', {
+      const r = await fetch('/api/contact/', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(data as unknown as Record<string, string>).toString(),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.fromEntries(data)),
       })
       if (!r.ok) throw new Error(String(r.status))
       form.reset()
@@ -62,12 +62,9 @@ export default function ContactForm() {
           ref={formRef}
           name="contact"
           method="POST"
-          data-netlify="true"
-          data-netlify-honeypot="bot-field"
           onSubmit={handleSubmit}
           className="contact-form"
         >
-          <input type="hidden" name="form-name" value="contact" />
           <div style={{ display: 'none' }}>
             <label>Don&apos;t fill this: <input name="bot-field" /></label>
           </div>
