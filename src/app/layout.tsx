@@ -1,8 +1,11 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import Script from 'next/script'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import ScrollProgress from '@/components/ScrollProgress'
+
+const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-TCNXKNRH'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.flaretechnologies.in'),
@@ -25,6 +28,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
+        <Script src={`https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`} strategy="afterInteractive" />
+        <Script id="google-tag" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());`}
+        </Script>
         <a className="skip" href="#main">Skip to content</a>
         <ScrollProgress />
         <Header />

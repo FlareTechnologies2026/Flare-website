@@ -1,7 +1,11 @@
 'use client'
 import React, { useState, useRef } from 'react'
 
-const EMAIL = 'marketing@flaretechnologies.in'
+declare global {
+  interface Window { dataLayer?: Record<string, unknown>[] }
+}
+
+const EMAIL ='marketing@flaretechnologies.in'
 const PHONE = '+91 78991 04311'
 const WHATSAPP = 'https://wa.me/917899104311'
 const LINKEDIN = 'https://www.linkedin.com/company/flaretechnologiespvtltd/'
@@ -37,6 +41,9 @@ export default function ContactForm() {
         body: JSON.stringify(Object.fromEntries(data)),
       })
       if (!r.ok) throw new Error(String(r.status))
+      // Conversion event for Google Tag Manager. No personal data is sent.
+      window.dataLayer = window.dataLayer || []
+      window.dataLayer.push({ event: 'generate_lead', form_name: 'contact', service: String(data.get('service') || '') })
       form.reset()
       setNote(`Thanks, ${name}. We have your request and will reply within one working day.`)
     } catch {
