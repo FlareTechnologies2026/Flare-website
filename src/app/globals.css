@@ -617,11 +617,12 @@ a:hover { color: #9e2907 }
    ================================================================ */
 .cases-compact {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
   margin-top: 20px;
 }
 .case-compact {
+  min-width: 0;
   border: 1px solid var(--ink-200);
   border-radius: 8px;
   padding: 8px 10px;
@@ -684,10 +685,10 @@ a:hover { color: #9e2907 }
 .case-compact-link  { display: none; }
 
 @media (max-width: 900px) {
-  .cases-compact { grid-template-columns: repeat(2, 1fr); }
+  .cases-compact { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 480px) {
-  .cases-compact { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+  .cases-compact { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
   .case-compact  { padding: 7px 8px; }
 }
 
@@ -852,8 +853,13 @@ a:hover { color: #9e2907 }
   .contact-form { padding: 22px 18px; border-radius: var(--radius-lg); }
   .contact-grid { grid-template-columns: 1fr; gap: 28px; }
 
-  /* Work compact cards — 2 per row */
-  .cases-compact { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  /* Work compact cards — single column with readable type on phones */
+  .cases-compact { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .case-compact { padding: 14px 16px; gap: 6px; }
+  .case-compact-logo { height: 20px; }
+  .case-compact-logo img { max-height: 20px; }
+  .case-compact-client { font-size: 13px; }
+  .case-compact-title { font-size: 15px; line-height: 1.35; }
 
   /* Scrolly */
   .scrolly-step { min-height: auto; }

@@ -55,7 +55,18 @@ function Dropdown({
           <path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.6" />
         </svg>
       </button>
-      <div className={`mega${open ? ' open' : ''}`} id={did} data-cols={cols.length}>
+      <div
+        className={`mega${open ? ' open' : ''}`}
+        id={did}
+        data-cols={cols.length}
+        onClick={e => {
+          // Close as soon as any link inside is clicked; the header persists across navigation
+          if ((e.target as HTMLElement).closest('a')) {
+            if (timerRef.current) clearTimeout(timerRef.current)
+            setOpen(false)
+          }
+        }}
+      >
         <div className="mega-inner">
           {cols.map(([heading, items]) => (
             <div className="mega-col" key={heading}>
@@ -141,7 +152,14 @@ export default function Header() {
         </button>
       </div>
 
-      <div className="mobile-nav" id="mobile-nav" hidden={!mobileOpen}>
+      <div
+        className="mobile-nav"
+        id="mobile-nav"
+        hidden={!mobileOpen}
+        onClick={e => {
+          if ((e.target as HTMLElement).closest('a')) setMobileOpen(false)
+        }}
+      >
         <MobileNav />
         <Link className="btn btn-primary btn-block" href="/contact/">Book a strategy call</Link>
       </div>
