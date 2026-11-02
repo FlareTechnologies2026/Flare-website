@@ -42,7 +42,8 @@ export default function Footer() {
             <p className="f-contact">
               <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
               <br />
-              <a href={WHATSAPP}>WhatsApp {PHONE}</a>
+              <a href={WHATSAPP}>WhatsApp</a>{' / '}
+              <a href={`tel:+917899104311`}>{PHONE}</a>
               <br />
               Bengaluru, India
             </p>

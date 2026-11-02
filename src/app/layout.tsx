@@ -4,6 +4,7 @@ import Script from 'next/script'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import ScrollProgress from '@/components/ScrollProgress'
+import CalendlyButton from '@/components/CalendlyButton'
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-TCNXKNRH'
 
@@ -50,6 +51,7 @@ gtag('js', new Date());`}
           {children}
         </main>
         <Footer />
+        <CalendlyButton />
       </body>
     </html>
   )

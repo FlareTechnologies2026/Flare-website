@@ -1,5 +1,6 @@
 'use client'
 import React, { useState, useRef } from 'react'
+import { useRouter } from 'next/navigation'
 
 declare global {
   interface Window { dataLayer?: Record<string, unknown>[] }
@@ -11,6 +12,7 @@ const WHATSAPP = 'https://wa.me/917899104311'
 const LINKEDIN = 'https://www.linkedin.com/company/flaretechnologiespvtltd/'
 
 export default function ContactForm() {
+  const router = useRouter()
   const [nameInvalid, setNameInvalid] = useState(false)
   const [emailInvalid, setEmailInvalid] = useState(false)
   const [note, setNote] = useState('')
@@ -43,9 +45,9 @@ export default function ContactForm() {
       if (!r.ok) throw new Error(String(r.status))
       // Conversion event for Google Tag Manager. No personal data is sent.
       window.dataLayer = window.dataLayer || []
-      window.dataLayer.push({ event: 'generate_lead', form_name: 'contact', service: String(data.get('service') || '') })
+      window.dataLayer.push({ event: 'contact_form_submit', form_service: String(data.get('service') || '') })
       form.reset()
-      setNote(`Thanks, ${name}. We have your request and will reply within one working day.`)
+      router.push('/thank-you')
     } catch {
       setNote(`We could not send the form from this page. Please write to ${EMAIL} and we will reply within one working day.`)
     }
@@ -58,7 +60,7 @@ export default function ContactForm() {
         <p className="lead">Tell us about your business and what you want to grow. In 30 minutes we will look at your current pipeline, tell you which plan fits, and send a written proposal within two working days.</p>
         <ul className="contact-list">
           <li><span>Email</span><a href={`mailto:${EMAIL}`}>{EMAIL}</a></li>
-          <li><span>WhatsApp</span><a href={WHATSAPP}>{PHONE}</a></li>
+          <li><span>WhatsApp</span><a href={WHATSAPP}>WhatsApp</a>{' / '}<a href={`tel:+917899104311`}>{PHONE}</a></li>
           <li><span>LinkedIn</span><a href={LINKEDIN} rel="noopener">Flare Technologies</a></li>
           <li><span>Location</span><span>Bengaluru, India</span></li>
         </ul>
