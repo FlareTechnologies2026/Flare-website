@@ -68,6 +68,9 @@ export const MENU_LABEL: Record<string, string> = {
   'dubai/seo-agency': 'SEO in Dubai',
   'dubai/software-development-company': 'Software Development in Dubai',
   'india/b2b-lead-generation-company': 'Lead Generation in India',
+  'india/b2b-marketing-agency': 'B2B Marketing in India',
+  'india/seo-agency': 'SEO in India',
+  'india/software-development-company': 'Software Development in India',
   'blog/b2b-lead-generation-guide': 'B2B Lead Generation Guide',
   'b2b-technical-marketing': 'What is B2B Technical Marketing?',
   'case-studies': 'Case Studies',
@@ -93,7 +96,7 @@ export const BUILD_MENU: [string, string[]][] = [
 
 export const INDUSTRY_MENU: [string, string[]][] = [
   ['Industries', ['industries/b2b-saas', 'industries/fintech', 'industries/construction', 'industries/real-estate', 'industries/manufacturing']],
-  ['Locations', ['dubai/lead-generation-company', 'dubai/b2b-marketing-agency', 'dubai/software-development-company', 'india/b2b-lead-generation-company']],
+  ['Locations', ['india/b2b-lead-generation-company', 'india/b2b-marketing-agency', 'india/seo-agency', 'india/software-development-company']],
 ]
 
 export const RESOURCE_MENU: [string, string[]][] = [
@@ -339,7 +342,7 @@ Many clients use Flare first, then hire in-house once the playbook is proven, an
       ['Who replies to prospects?', 'Our in-house sales team. They answer questions, handle objections and book the meeting. You approve the scripts before anything goes out.'],
       ['What does B2B lead generation cost?', 'Pricing depends on the plan, the number of markets and whether ads are included. Book a strategy call and we will send a written proposal within two working days.'],
     ],
-    related: ['linkedin-lead-generation', 'appointment-setting', 'growth-system', 'dubai/lead-generation-company', 'blog/b2b-lead-generation-guide'],
+    related: ['linkedin-lead-generation', 'appointment-setting', 'growth-system', 'india/b2b-lead-generation-company', 'blog/b2b-lead-generation-guide'],
   },
   {
     slug: 'linkedin-lead-generation',
@@ -520,7 +523,7 @@ Our GEO work covers all three, and we track a fixed set of buyer questions each 
       ['How do you measure AI visibility?', 'We test a fixed set of buyer questions in ChatGPT, Gemini and Perplexity every month and track how often you are mentioned and cited, alongside Google rankings and traffic.'],
       ['Can you fix a website built on Lovable or another React builder?', 'Yes. These sites often send search engines a nearly empty page. We set up pre-rendering or rebuild key pages so every page is readable without JavaScript.'],
     ],
-    related: ['demand-generation-agency', 'custom-development/web-development', 'dubai/seo-agency', 'b2b-technical-marketing'],
+    related: ['demand-generation-agency', 'custom-development/web-development', 'b2b-technical-marketing'],
   },
 )
 
@@ -965,7 +968,7 @@ PAGES.push(
       ['What support do you give after launch?', 'A support plan covering monitoring, bug fixes, updates and new features, agreed before launch.'],
       ['Which technologies do you use?', 'We choose the stack for the project. Common choices are React and Next.js for web, React Native or Flutter for mobile, Node.js and Python on the server, and AWS or Google Cloud for hosting.'],
     ],
-    related: ['custom-development/mvp-development', 'custom-development/ai-automation', 'custom-development/erp-implementation', 'dubai/software-development-company'],
+    related: ['custom-development/mvp-development', 'custom-development/ai-automation', 'custom-development/erp-implementation'],
   },
   {
     slug: 'custom-development/web-development',
@@ -1253,7 +1256,7 @@ PAGES.push(
       ['Do you do local SEO for contractors?', 'Yes. Google Business Profile, local pages and reviews are usually the first step for construction and interiors.'],
       ['Can you build project management software?', 'Yes. Our Custom Development team has built construction and interior management systems.'],
     ],
-    related: ['social-media-management', 'seo-aeo-geo', 'custom-development/erp-implementation', 'dubai/b2b-marketing-agency'],
+    related: ['social-media-management', 'seo-aeo-geo', 'custom-development/erp-implementation'],
   },
   {
     slug: 'industries/real-estate',
@@ -1276,7 +1279,7 @@ PAGES.push(
       ['How fast do you follow up leads?', 'Automation responds instantly and our sales team follows up during working hours, because speed decides most real estate leads.'],
       ['Do you run campaigns in the UAE?', 'Yes. We run campaigns in India and the UAE.'],
     ],
-    related: ['paid-ads/meta-ads', 'appointment-setting', 'custom-development/ai-automation', 'dubai/lead-generation-company'],
+    related: ['paid-ads/meta-ads', 'appointment-setting', 'custom-development/ai-automation', 'india/b2b-lead-generation-company'],
   },
   {
     slug: 'industries/manufacturing',
@@ -1336,7 +1339,7 @@ PAGES.push(
       ['Which sectors do you target in the UAE?', 'Construction, real estate, energy, fintech, logistics, technology and professional services are the most common.'],
       ['Do you follow UAE working days?', 'Yes. Outreach and follow-up run on UAE working days and hours.'],
     ],
-    related: ['b2b-lead-generation-agency', 'dubai/b2b-marketing-agency', 'dubai/seo-agency', 'appointment-setting'],
+    related: ['b2b-lead-generation-agency', 'appointment-setting'],
   },
   {
     slug: 'dubai/b2b-marketing-agency',
@@ -1360,7 +1363,7 @@ PAGES.push(
       ['Do you have experience in the UAE?', 'Yes. We work with UAE clients in construction, fintech, financial services and technology.'],
       ['Can you market in Arabic?', 'We create English-first B2B campaigns and work with Arabic translators where campaigns need it.'],
     ],
-    related: ['dubai/lead-generation-company', 'linkedin-marketing-agency', 'seo-aeo-geo', 'growth-system'],
+    related: ['india/b2b-lead-generation-company', 'linkedin-marketing-agency', 'seo-aeo-geo', 'growth-system'],
   },
   {
     slug: 'dubai/seo-agency',
@@ -1384,7 +1387,7 @@ PAGES.push(
       ['How long does SEO take in Dubai?', 'Technical fixes help within weeks. New pages usually take three to six months to reach steady rankings.'],
       ['Do you do local SEO for Google Maps?', 'Yes. Google Business Profile and local citations are part of every UAE SEO plan.'],
     ],
-    related: ['seo-aeo-geo', 'dubai/b2b-marketing-agency', 'custom-development/web-development', 'dubai/lead-generation-company'],
+    related: ['seo-aeo-geo', 'custom-development/web-development'],
   },
   {
     slug: 'dubai/software-development-company',
@@ -1409,7 +1412,7 @@ PAGES.push(
       ['Are you based in Dubai?', 'Our engineering team is in Bengaluru, India. We work with UAE clients remotely, during UAE working hours.'],
       ['Who owns the code?', 'You do, on final payment.'],
     ],
-    related: ['custom-development', 'custom-development/erp-implementation', 'custom-development/mobile-app-development', 'dubai/b2b-marketing-agency'],
+    related: ['custom-development', 'custom-development/erp-implementation', 'custom-development/mobile-app-development'],
   },
   {
     slug: 'india/b2b-lead-generation-company',
@@ -1434,6 +1437,79 @@ PAGES.push(
       ['Can we meet in person?', 'Yes, in Bengaluru. We work with clients across India online.'],
     ],
     related: ['b2b-lead-generation-agency', 'outsourced-sales-team', 'linkedin-lead-generation', 'growth-system'],
+  },
+  {
+    slug: 'india/b2b-marketing-agency',
+    nav_group: 'Locations',
+    kind: 'service',
+    keyword: 'b2b marketing agency india',
+    title: 'B2B Marketing Agency in India | Bengaluru | Flare Technologies',
+    desc: 'B2B marketing in India: LinkedIn, SEO, ads, content and outreach run as one growth system for Indian companies and those entering India.',
+    h1: 'B2B marketing agency in India.',
+    lead: 'We run B2B marketing for companies in India and for companies entering the market. One team handles LinkedIn, SEO and AI search, ads, content and outreach, with a sales team that turns interest into meetings.',
+    includes: ['ICP research', 'Decision-maker lists', 'LinkedIn, email and phone outreach', 'Ads where they fit', 'Website, SEO and AI-search fixes', 'Meetings booked by our team'],
+    area: 'IN',
+    sections: [
+      ['What we run for Indian companies', `- LinkedIn company pages, founder branding and LinkedIn ads
+- SEO, AEO and GEO for Indian search and AI assistants
+- Google and Meta campaigns for the Indian market
+- Lead generation and appointment setting
+- Websites and apps from our Custom Development team`],
+    ],
+    faqs: [
+      ['Do you work across India?', 'Yes. We work with companies across Bengaluru, Mumbai, Delhi, Hyderabad and other major cities, and run outreach to buyers anywhere in India.'],
+      ['Can you target specific industries in India?', 'Yes. We have experience in B2B SaaS, fintech, construction, manufacturing and professional services.'],
+    ],
+    related: ['india/b2b-lead-generation-company', 'linkedin-marketing-agency', 'seo-aeo-geo', 'growth-system'],
+  },
+  {
+    slug: 'india/seo-agency',
+    nav_group: 'Locations',
+    kind: 'service',
+    keyword: 'seo agency india',
+    title: 'SEO Agency in India | SEO, AEO & GEO for Indian Market | Flare',
+    desc: 'SEO in India for B2B companies: technical fixes, content and AI-search optimisation so Google and ChatGPT recommend you to Indian buyers.',
+    h1: 'SEO agency in India.',
+    lead: 'We help Indian businesses get found on Google and in AI assistants like ChatGPT. That means fixing how your site is built, planning one search phrase per page, and publishing content that answers what Indian buyers ask.',
+    includes: ['ICP research', 'Decision-maker lists', 'LinkedIn, email and phone outreach', 'Ads where they fit', 'Website, SEO and AI-search fixes', 'Meetings booked by our team'],
+    area: 'IN',
+    sections: [
+      ['What India SEO covers', `- Technical audit and fixes so every page is readable by Google and AI crawlers
+- India-specific keyword plan by service and city
+- Google Business Profile and local citations
+- Content and FAQs written for Indian buyers
+- Monthly ranking and AI-visibility reporting`],
+    ],
+    faqs: [
+      ['How long does SEO take in India?', 'Technical fixes help within weeks. New pages usually take three to six months to reach steady rankings.'],
+      ['Do you do local SEO for Google Maps?', 'Yes. Google Business Profile and local citations are part of every India SEO plan.'],
+    ],
+    related: ['seo-aeo-geo', 'custom-development/web-development', 'demand-generation-agency', 'b2b-technical-marketing'],
+  },
+  {
+    slug: 'india/software-development-company',
+    nav_group: 'Locations',
+    kind: 'service',
+    keyword: 'software development company india',
+    title: 'Software Development Company in India | Bengaluru | Flare',
+    desc: 'Custom software, mobile apps, MVPs, ERP and AI automation built in Bengaluru. 7 years of experience and 19 products shipped.',
+    h1: 'Software development company in India.',
+    lead: 'Flare\'s Custom Development team builds web apps, mobile apps, MVPs, ERP systems and AI automation for Indian and international businesses. Based in Bengaluru with 7 years of experience and 19 products shipped.',
+    includes: ['Web and mobile development', 'MVP development', 'ERP implementation', 'AI automation & agents', 'UI/UX design', 'Cloud & DevOps'],
+    area: 'IN',
+    sections: [
+      ['What we build', `- Custom web platforms and portals
+- Android and iOS apps
+- MVPs for Indian founders
+- ERP implementation and custom ERP
+- AI chatbots and workflow automation`],
+      ['Proof', `Our team has 7 years of experience and has shipped 19 products, including a B2B beverage ordering app for Coca-Cola. [See the work](/custom-development/work/).`],
+    ],
+    faqs: [
+      ['Where are you based?', 'Our engineering team is in Bengaluru, India. We work with clients across India and internationally.'],
+      ['Who owns the code?', 'You do, on final payment.'],
+    ],
+    related: ['custom-development', 'custom-development/erp-implementation', 'custom-development/mobile-app-development'],
   },
 )
 
