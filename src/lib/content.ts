@@ -1630,7 +1630,7 @@ Clicks and impressions are signals. Meetings and pipeline are results.`],
 - **Proof over promises.** We report meetings and revenue, not impressions.
 - **Plain language.** If you cannot understand what we are doing, we are explaining it badly.
 - **One team.** Marketing, sales and technology work best when they sit together.`],
-      ['The company', `Flare Technologies is the brand of MS Digitflare IT Solutions (OPC) Private Limited, registered in New Delhi, with its team based in Bengaluru.`],
+      ['The company', `Flare Technologies is a B2B sales and marketing company based in Bengaluru.`],
     ],
     faqs: [
       ['Where is Flare Technologies based?', 'Our team is in Bengaluru, India. We work with clients across India, the UAE and the US.'],

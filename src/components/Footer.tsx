@@ -68,8 +68,11 @@ export default function Footer() {
           </div>
         </div>
         <div className="f-bottom">
-          <p>&copy; 2026 Flare Technologies. A brand of MS Digitflare IT Solutions (OPC) Private Limited.</p>
-          <a className="f-admin-link" href="/admin/" aria-label="Admin panel">Admin</a>
+          <p>&copy; 2026 Flare Technologies.</p>
+          <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+            <a href="/privacy-policy/" style={{ fontSize: '13px', color: 'var(--ink-500)' }}>Privacy Policy</a>
+            <a className="f-admin-link" href="/admin/" aria-label="Admin panel">Admin</a>
+          </div>
         </div>
       </div>
     </footer>
