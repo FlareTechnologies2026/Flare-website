@@ -96,7 +96,7 @@ export const BUILD_MENU: [string, string[]][] = [
 
 export const INDUSTRY_MENU: [string, string[]][] = [
   ['Industries', ['industries/b2b-saas', 'industries/fintech', 'industries/construction', 'industries/real-estate', 'industries/manufacturing']],
-  ['Locations', ['india/b2b-lead-generation-company', 'india/b2b-marketing-agency', 'india/seo-agency', 'india/software-development-company']],
+  ['Locations', ['dubai/lead-generation-company', 'dubai/b2b-marketing-agency', 'dubai/seo-agency', 'dubai/software-development-company']],
 ]
 
 export const RESOURCE_MENU: [string, string[]][] = [

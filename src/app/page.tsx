@@ -9,8 +9,8 @@ import HomeClient from '@/components/HomeClient'
 import { SYSTEM_STEPS, CASES } from '@/lib/content'
 
 export const metadata: Metadata = {
-  title: 'Flare Technologies | B2B Lead Generation & Growth Team — India, UAE & US',
-  description: 'We book qualified sales meetings for B2B companies in India, the UAE and the US. Flare finds your buyers, runs outreach and ads, and our sales team puts meetings in your calendar.',
+  title: 'Flare Technologies | B2B Lead Generation & Growth Team — India',
+  description: 'We book qualified sales meetings for B2B companies in India. Flare finds your buyers, runs outreach and ads, and our sales team puts meetings in your calendar.',
 }
 
 const labels = SYSTEM_STEPS.map(([t]) => t)
@@ -62,7 +62,7 @@ export default function HomePage() {
           {/* Eyebrow — tells who it's for and where */}
           <p className="hero-kicker">
             <span className="live-dot" aria-hidden="true" />
-            B2B sales and marketing — India, UAE &amp; US
+            B2B sales and marketing — India
           </p>
 
           {/* H1 — clear outcome */}
