@@ -1,5 +1,4 @@
-import fs from 'fs/promises'
-import path from 'path'
+import { supabase } from './supabase'
 
 export interface CaseStudy {
   id: string
@@ -12,53 +11,52 @@ export interface CaseStudy {
   link: string
 }
 
-const DATA_FILE = path.join(process.cwd(), 'data', 'case-studies.json')
+export async function getCases(): Promise<CaseStudy[]> {
+  const { data, error } = await supabase.from('case_studies').select('*').order('created_at', { ascending: false })
+  if (error) { console.error('getCases error:', error); return [] }
+  return (data || []).map(rowToCase)
+}
 
-/** Ensure the data file exists, seeding from nothing if missing */
-async function ensureFile(): Promise<void> {
-  try {
-    await fs.access(DATA_FILE)
-  } catch {
-    await fs.mkdir(path.dirname(DATA_FILE), { recursive: true })
-    await fs.writeFile(DATA_FILE, '[]', 'utf-8')
+export async function addCase(c: Omit<CaseStudy, 'id'>): Promise<CaseStudy> {
+  const { data, error } = await supabase.from('case_studies').insert([caseToRow(c)]).select().single()
+  if (error) throw new Error(error.message)
+  return rowToCase(data)
+}
+
+export async function updateCase(id: string, updates: Partial<Omit<CaseStudy, 'id'>>): Promise<CaseStudy | null> {
+  const { data, error } = await supabase.from('case_studies').update(caseToRow(updates as CaseStudy)).eq('id', id).select().single()
+  if (error || !data) return null
+  return rowToCase(data)
+}
+
+export async function deleteCase(id: string): Promise<boolean> {
+  const { error } = await supabase.from('case_studies').delete().eq('id', id)
+  return !error
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function rowToCase(row: any): CaseStudy {
+  return {
+    id: row.id,
+    sector: row.sector,
+    client: row.client,
+    logo: row.logo,
+    title: row.title,
+    body: row.body,
+    stats: row.stats || [],
+    link: row.link,
   }
 }
 
-/** Read all case studies from the JSON store */
-export async function getCases(): Promise<CaseStudy[]> {
-  await ensureFile()
-  const raw = await fs.readFile(DATA_FILE, 'utf-8')
-  return JSON.parse(raw)
-}
-
-/** Add a new case study */
-export async function addCase(data: Omit<CaseStudy, 'id'>): Promise<CaseStudy> {
-  await ensureFile()
-  const cases = await getCases()
-  const id = `case-${Date.now()}`
-  const entry: CaseStudy = { id, ...data }
-  cases.push(entry)
-  await fs.writeFile(DATA_FILE, JSON.stringify(cases, null, 2), 'utf-8')
-  return entry
-}
-
-/** Update an existing case study by id */
-export async function updateCase(id: string, updates: Partial<Omit<CaseStudy, 'id'>>): Promise<CaseStudy | null> {
-  await ensureFile()
-  const cases = await getCases()
-  const idx = cases.findIndex(c => c.id === id)
-  if (idx === -1) return null
-  cases[idx] = { ...cases[idx], ...updates, id }
-  await fs.writeFile(DATA_FILE, JSON.stringify(cases, null, 2), 'utf-8')
-  return cases[idx]
-}
-
-/** Delete a case study by id */
-export async function deleteCase(id: string): Promise<boolean> {
-  await ensureFile()
-  const cases = await getCases()
-  const filtered = cases.filter(c => c.id !== id)
-  if (filtered.length === cases.length) return false
-  await fs.writeFile(DATA_FILE, JSON.stringify(filtered, null, 2), 'utf-8')
-  return true
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function caseToRow(c: Partial<CaseStudy>): any {
+  const row: Record<string, unknown> = {}
+  if (c.sector !== undefined) row.sector = c.sector
+  if (c.client !== undefined) row.client = c.client
+  if (c.logo !== undefined) row.logo = c.logo
+  if (c.title !== undefined) row.title = c.title
+  if (c.body !== undefined) row.body = c.body
+  if (c.stats !== undefined) row.stats = c.stats
+  if (c.link !== undefined) row.link = c.link
+  return row
 }

@@ -1,7 +1,5 @@
-import fs from 'fs/promises'
-import path from 'path'
+import { supabase } from './supabase'
 
-// A content block — either a regular section or a FAQ
 export type ContentBlock =
   | { type: 'section'; heading: string; body: string }
   | { type: 'faq'; question: string; answer: string }
@@ -11,66 +9,81 @@ export interface BlogPost {
   slug: string
   title: string
   excerpt: string
-  blocks: ContentBlock[]   // structured content blocks
-  coverImage?: string      // path relative to /public e.g. /uploads/blog-123.jpg
+  blocks: ContentBlock[]
+  coverImage?: string
   author: string
-  publishedAt: string      // ISO date string
+  publishedAt: string
   category: string
-  // SEO
   metaTitle?: string
   metaDesc?: string
   ogImage?: string
   published: boolean
 }
 
-const DATA_FILE = path.join(process.cwd(), 'data', 'blog-posts.json')
-
-async function ensureFile(): Promise<void> {
-  try {
-    await fs.access(DATA_FILE)
-  } catch {
-    await fs.mkdir(path.dirname(DATA_FILE), { recursive: true })
-    await fs.writeFile(DATA_FILE, '[]', 'utf-8')
-  }
-}
-
 export async function getPosts(onlyPublished = false): Promise<BlogPost[]> {
-  await ensureFile()
-  const raw = await fs.readFile(DATA_FILE, 'utf-8')
-  const posts: BlogPost[] = JSON.parse(raw)
-  return onlyPublished ? posts.filter(p => p.published) : posts
+  let query = supabase.from('blog_posts').select('*').order('published_at', { ascending: false })
+  if (onlyPublished) query = query.eq('published', true)
+  const { data, error } = await query
+  if (error) { console.error('getPosts error:', error); return [] }
+  return (data || []).map(rowToPost)
 }
 
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
-  const posts = await getPosts()
-  return posts.find(p => p.slug === slug) ?? null
+  const { data, error } = await supabase.from('blog_posts').select('*').eq('slug', slug).single()
+  if (error || !data) return null
+  return rowToPost(data)
 }
 
-export async function addPost(data: Omit<BlogPost, 'id'>): Promise<BlogPost> {
-  await ensureFile()
-  const posts = await getPosts()
-  const id = `post-${Date.now()}`
-  const entry: BlogPost = { id, ...data }
-  posts.push(entry)
-  await fs.writeFile(DATA_FILE, JSON.stringify(posts, null, 2), 'utf-8')
-  return entry
+export async function addPost(post: Omit<BlogPost, 'id'>): Promise<BlogPost> {
+  const { data, error } = await supabase.from('blog_posts').insert([postToRow(post)]).select().single()
+  if (error) throw new Error(error.message)
+  return rowToPost(data)
 }
 
 export async function updatePost(id: string, updates: Partial<Omit<BlogPost, 'id'>>): Promise<BlogPost | null> {
-  await ensureFile()
-  const posts = await getPosts()
-  const idx = posts.findIndex(p => p.id === id)
-  if (idx === -1) return null
-  posts[idx] = { ...posts[idx], ...updates, id }
-  await fs.writeFile(DATA_FILE, JSON.stringify(posts, null, 2), 'utf-8')
-  return posts[idx]
+  const { data, error } = await supabase.from('blog_posts').update(postToRow(updates as BlogPost)).eq('id', id).select().single()
+  if (error || !data) return null
+  return rowToPost(data)
 }
 
 export async function deletePost(id: string): Promise<boolean> {
-  await ensureFile()
-  const posts = await getPosts()
-  const filtered = posts.filter(p => p.id !== id)
-  if (filtered.length === posts.length) return false
-  await fs.writeFile(DATA_FILE, JSON.stringify(filtered, null, 2), 'utf-8')
-  return true
+  const { error } = await supabase.from('blog_posts').delete().eq('id', id)
+  return !error
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function rowToPost(row: any): BlogPost {
+  return {
+    id: row.id,
+    slug: row.slug,
+    title: row.title,
+    excerpt: row.excerpt,
+    blocks: row.blocks || [],
+    coverImage: row.cover_image,
+    author: row.author,
+    publishedAt: row.published_at,
+    category: row.category,
+    metaTitle: row.meta_title,
+    metaDesc: row.meta_desc,
+    ogImage: row.og_image,
+    published: row.published,
+  }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function postToRow(post: Partial<BlogPost>): any {
+  const row: Record<string, unknown> = {}
+  if (post.slug !== undefined) row.slug = post.slug
+  if (post.title !== undefined) row.title = post.title
+  if (post.excerpt !== undefined) row.excerpt = post.excerpt
+  if (post.blocks !== undefined) row.blocks = post.blocks
+  if (post.coverImage !== undefined) row.cover_image = post.coverImage
+  if (post.author !== undefined) row.author = post.author
+  if (post.publishedAt !== undefined) row.published_at = post.publishedAt
+  if (post.category !== undefined) row.category = post.category
+  if (post.metaTitle !== undefined) row.meta_title = post.metaTitle
+  if (post.metaDesc !== undefined) row.meta_desc = post.metaDesc
+  if (post.ogImage !== undefined) row.og_image = post.ogImage
+  if (post.published !== undefined) row.published = post.published
+  return row
 }
