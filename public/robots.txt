@@ -1,7 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /admin/
-Disallow: /api/
-Disallow: /thank-you/
-
-Sitemap: https://www.flaretechnologies.in/sitemap.xml
