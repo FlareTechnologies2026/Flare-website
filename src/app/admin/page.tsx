@@ -82,10 +82,16 @@ export default function AdminPage() {
   }
 
   // ── Image upload ──
+  const [coverImgName, setCoverImgName] = useState('')
+  const [ogImgName, setOgImgName] = useState('')
+
   const handleImageUpload = async (file: File, target: 'cover' | 'og') => {
     setUploadingImg(true)
     const fd = new FormData()
     fd.append('file', file)
+    // Use custom name if provided, slugified
+    const customName = target === 'cover' ? coverImgName : ogImgName
+    if (customName) fd.append('filename', slugify(customName))
     try {
       const r = await fetch('/api/upload', { method: 'POST', body: fd })
       if (r.ok) {
@@ -356,6 +362,13 @@ export default function AdminPage() {
 
               {/* Cover image upload */}
               <label style={labelStyle}>Cover image</label>
+              <input
+                value={coverImgName}
+                onChange={e => setCoverImgName(e.target.value)}
+                placeholder="Image name for SEO e.g. b2b-lead-generation-india"
+                style={{ ...inputStyle, marginBottom: 8 }}
+              />
+              <p style={hintStyle}>Name your image for SEO (no spaces, no .jpg — just the name). Then upload.</p>
               <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
                 <input ref={fileInputRef} type="file" accept="image/*" style={{ display: 'none' }}
                   onChange={e => { const f = e.target.files?.[0]; if (f) handleImageUpload(f, 'cover') }} />
@@ -365,7 +378,7 @@ export default function AdminPage() {
                 </button>
                 {blogForm.coverImage && (
                   <span style={{ fontSize: 13, color: '#34C283', wordBreak: 'break-all' }}>
-                    ✓ {blogForm.coverImage}
+                    ✓ Uploaded
                     <button type="button" onClick={() => setBlogForm(f => ({ ...f, coverImage: '' }))}
                       style={{ background: 'none', border: 'none', color: '#F4140C', cursor: 'pointer', marginLeft: 8 }}>✕</button>
                   </span>
@@ -443,6 +456,13 @@ export default function AdminPage() {
                 <label style={labelStyle}>Meta description <span style={{ color: '#646F7E', fontWeight: 400 }}>(shown in Google — keep under 160 chars)</span></label>
                 <textarea value={blogForm.metaDesc} onChange={e => setBlogForm(f => ({ ...f, metaDesc: e.target.value }))} placeholder="Leave blank to use excerpt" rows={2} style={{ ...inputStyle, resize: 'vertical' }} />
                 <label style={labelStyle}>OG image for social sharing</label>
+                <input
+                  value={ogImgName}
+                  onChange={e => setOgImgName(e.target.value)}
+                  placeholder="Image name for SEO e.g. b2b-lead-generation-og"
+                  style={{ ...inputStyle, marginBottom: 8 }}
+                />
+                <p style={hintStyle}>Name before uploading for better SEO.</p>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                   <input type="file" accept="image/*" style={{ display: 'none' }} id="og-upload"
                     onChange={e => { const f = e.target.files?.[0]; if (f) handleImageUpload(f, 'og') }} />
@@ -451,7 +471,7 @@ export default function AdminPage() {
                   </label>
                   {blogForm.ogImage && (
                     <span style={{ fontSize: 13, color: '#34C283' }}>
-                      ✓ {blogForm.ogImage}
+                      ✓ Uploaded
                       <button type="button" onClick={() => setBlogForm(f => ({ ...f, ogImage: '' }))}
                         style={{ background: 'none', border: 'none', color: '#F4140C', cursor: 'pointer', marginLeft: 8 }}>✕</button>
                     </span>

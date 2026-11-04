@@ -18,7 +18,9 @@ export async function POST(req: NextRequest) {
   if (file.size > 5 * 1024 * 1024) return NextResponse.json({ error: 'Image must be under 5MB' }, { status: 400 })
 
   const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg'
-  const fileName = `blog-${Date.now()}.${ext}`
+  const customName = formData.get('filename') as string | null
+  const baseName = customName ? customName.replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-') : `blog-${Date.now()}`
+  const fileName = `${baseName}.${ext}`
   const buffer = Buffer.from(await file.arrayBuffer())
 
   const { error } = await supabase.storage
