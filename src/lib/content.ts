@@ -72,6 +72,7 @@ export const MENU_LABEL: Record<string, string> = {
   'india/seo-agency': 'SEO in India',
   'india/software-development-company': 'Software Development in India',
   'blog/b2b-lead-generation-guide': 'B2B Lead Generation Guide',
+  'blog': 'Blog',
   'b2b-technical-marketing': 'What is B2B Technical Marketing?',
   'case-studies': 'Case Studies',
   'about': 'About',
@@ -100,7 +101,7 @@ export const INDUSTRY_MENU: [string, string[]][] = [
 ]
 
 export const RESOURCE_MENU: [string, string[]][] = [
-  ['Learn', ['blog/b2b-lead-generation-guide', 'b2b-technical-marketing', 'case-studies', 'careers']],
+  ['Learn', ['blog', 'blog/b2b-lead-generation-guide', 'b2b-technical-marketing', 'case-studies', 'careers']],
 ]
 
 export interface CaseEntry {
