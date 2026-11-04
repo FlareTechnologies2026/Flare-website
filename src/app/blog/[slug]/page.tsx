@@ -78,32 +78,46 @@ export default async function BlogPostPage({ params }: Props) {
         {/* Content */}
         <section className="section">
           <div className="wrap" style={{ maxWidth: 780 }}>
-            {post.blocks.map((block, i) => {
-              if (block.type === 'section') {
+
+            {/* Section blocks */}
+            {post.blocks.filter(b => b.type === 'section').length > 0 && (
+              post.blocks.filter(b => b.type === 'section').map((block, i) => {
+                if (block.type !== 'section') return null
                 return (
                   <div key={i} style={{ marginBottom: '2.5rem' }}>
-                    {block.heading && <h2>{block.heading}</h2>}
+                    {block.heading && <h2 className="blog-section-heading">{block.heading}</h2>}
                     <div
                       className="blog-body"
                       dangerouslySetInnerHTML={{ __html: renderContent(block.body) }}
                     />
                   </div>
                 )
-              }
-              if (block.type === 'faq') {
-                return (
-                  <div key={i} style={{ borderLeft: '3px solid var(--primary-500)', paddingLeft: '1.25rem', marginBottom: '1.5rem' }}>
-                    <p style={{ fontWeight: 700, color: 'var(--ink-950)', marginBottom: '0.4rem', fontSize: '17px' }}>{block.question}</p>
-                    <div
-                      className="blog-body"
-                      style={{ margin: 0 }}
-                      dangerouslySetInnerHTML={{ __html: renderContent(block.answer) }}
-                    />
-                  </div>
-                )
-              }
-              return null
-            })}
+              })
+            )}
+
+            {/* FAQ blocks */}
+            {post.blocks.filter(b => b.type === 'faq').length > 0 && (
+              <div className="blog-faq-section">
+                <h2 className="blog-section-heading">Frequently Asked Questions</h2>
+                <div className="blog-faq-list">
+                  {post.blocks.filter(b => b.type === 'faq').map((block, i) => {
+                    if (block.type !== 'faq') return null
+                    return (
+                      <div key={i} className="blog-faq-item">
+                        <h3 className="blog-faq-q">
+                          <span className="blog-faq-num">{i + 1}</span>
+                          {block.question}
+                        </h3>
+                        <div
+                          className="blog-body blog-faq-a"
+                          dangerouslySetInnerHTML={{ __html: renderContent(block.answer) }}
+                        />
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
 
             <div style={{ marginTop: '3rem', paddingTop: '2rem', borderTop: '1px solid var(--ink-100)' }}>
               <Link href="/blog/" className="btn btn-outline">← Back to blog</Link>
