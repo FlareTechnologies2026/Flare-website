@@ -927,6 +927,7 @@ a:hover { color: #9e2907 }
 }
 
 /* ── Blog ── */
+.blog-hero{min-height:420px;display:flex;align-items:center}
 .blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:32px;align-items:start}
 .blog-card{border:1px solid var(--ink-100);border-radius:var(--radius-lg);overflow:hidden;background:#fff;transition:box-shadow .2s,transform .2s;display:flex;flex-direction:column}
 .blog-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
@@ -941,11 +942,16 @@ a:hover { color: #9e2907 }
 .blog-card-title a:hover{color:var(--primary-600)}
 .blog-card-excerpt{color:var(--ink-600);font-size:15px;line-height:1.6;margin-bottom:20px;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .blog-body{font-size:17px;line-height:1.8;color:var(--ink-800)}
-.blog-body h2{margin-top:2em;font-size:clamp(22px,2.5vw,28px)}
-.blog-body h3{margin-top:1.6em}
+.blog-body h1,.blog-body h2,.blog-body h3,.blog-body h4{font-family:var(--font-display);color:var(--ink-950);margin-top:2em;margin-bottom:.5em}
+.blog-body h2{font-size:clamp(20px,2.5vw,26px)}
+.blog-body h3{font-size:18px}
 .blog-body p{margin-bottom:1.2em}
-.blog-body ul,.blog-body ol{margin-bottom:1.2em}
-.blog-body img{border-radius:var(--radius-md);margin:1.5em 0}
+.blog-body ul,.blog-body ol{margin-bottom:1.2em;padding-left:1.4em}
+.blog-body li{margin:.4em 0}
+.blog-body img{border-radius:var(--radius-md);margin:1.5em 0;max-width:100%}
 .blog-body a{color:var(--primary-600);font-weight:600}
-.blog-body blockquote{border-left:4px solid var(--primary-500);padding:12px 20px;margin:1.5em 0;background:var(--ink-50);border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--ink-700)}
 .blog-body strong{color:var(--ink-950)}
+.blog-body blockquote{border-left:4px solid var(--primary-500);padding:12px 20px;margin:1.5em 0;background:var(--ink-50);border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--ink-700)}
+.blog-body code{background:var(--ink-100);padding:2px 6px;border-radius:4px;font-size:14px;font-family:monospace}
+.blog-body pre{background:var(--ink-950);color:#e2e8f0;padding:20px;border-radius:var(--radius-md);overflow-x:auto;margin:1.5em 0}
+.blog-body pre code{background:none;padding:0}

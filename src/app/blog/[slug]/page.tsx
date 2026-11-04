@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
+import { marked } from 'marked'
 import { getPostBySlug, getPosts } from '@/lib/blogStore'
 import CtaBand from '@/components/CtaBand'
 
@@ -38,6 +39,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
+// Render markdown or plain text to clean HTML
+function renderContent(text: string): string {
+  if (!text) return ''
+  // Use marked to parse markdown
+  const html = marked.parse(text, { async: false }) as string
+  return html
+}
+
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params
   const post = await getPostBySlug(slug)
@@ -46,37 +55,38 @@ export default async function BlogPostPage({ params }: Props) {
   return (
     <>
       <article>
-        <section className="hero hero-inner">
-          <div className="wrap" style={{ maxWidth: 800 }}>
-            <p className="blog-meta" style={{ marginBottom: '1rem' }}>
-              <span>{post.category}</span>
-              <span> · </span>
+        {/* Hero — with cover image as background if available */}
+        <section
+          className="blog-hero"
+          style={post.coverImage ? {
+            background: `linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url(${post.coverImage}) center/cover no-repeat`,
+            color: '#fff',
+          } : {}}
+        >
+          <div className="wrap" style={{ maxWidth: 800, paddingTop: '4rem', paddingBottom: '4rem' }}>
+            <p className="blog-meta" style={{ marginBottom: '1rem', color: post.coverImage ? 'rgba(255,255,255,0.8)' : undefined }}>
+              <span className="blog-tag" style={post.coverImage ? { background: 'rgba(255,255,255,0.2)', color: '#fff' } : undefined}>{post.category}</span>
               <span>{new Date(post.publishedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
-              <span> · </span>
+              <span>·</span>
               <span>By {post.author}</span>
             </p>
-            <h1 style={{ maxWidth: '100%' }}>{post.title}</h1>
-            <p className="lead">{post.excerpt}</p>
+            <h1 style={{ maxWidth: '100%', color: post.coverImage ? '#fff' : undefined }}>{post.title}</h1>
+            <p className="lead" style={{ color: post.coverImage ? 'rgba(255,255,255,0.88)' : undefined }}>{post.excerpt}</p>
           </div>
         </section>
 
-        {post.coverImage && (
-          <div className="wrap" style={{ maxWidth: 800, marginBottom: '2rem' }}>
-            <Image src={post.coverImage} alt={post.title} width={800} height={450}
-              style={{ width: '100%', height: 'auto', borderRadius: 'var(--radius-lg)', objectFit: 'cover' }} priority />
-          </div>
-        )}
-
+        {/* Content */}
         <section className="section">
-          <div className="wrap" style={{ maxWidth: 800 }}>
-
-            {/* Render all blocks in the order they were written */}
+          <div className="wrap" style={{ maxWidth: 780 }}>
             {post.blocks.map((block, i) => {
               if (block.type === 'section') {
                 return (
                   <div key={i} style={{ marginBottom: '2.5rem' }}>
                     {block.heading && <h2>{block.heading}</h2>}
-                    <div className="blog-body" style={{ whiteSpace: 'pre-wrap' }}>{block.body}</div>
+                    <div
+                      className="blog-body"
+                      dangerouslySetInnerHTML={{ __html: renderContent(block.body) }}
+                    />
                   </div>
                 )
               }
@@ -84,7 +94,11 @@ export default async function BlogPostPage({ params }: Props) {
                 return (
                   <div key={i} style={{ borderLeft: '3px solid var(--primary-500)', paddingLeft: '1.25rem', marginBottom: '1.5rem' }}>
                     <p style={{ fontWeight: 700, color: 'var(--ink-950)', marginBottom: '0.4rem', fontSize: '17px' }}>{block.question}</p>
-                    <p style={{ color: 'var(--ink-700)', margin: 0, whiteSpace: 'pre-wrap' }}>{block.answer}</p>
+                    <div
+                      className="blog-body"
+                      style={{ margin: 0 }}
+                      dangerouslySetInnerHTML={{ __html: renderContent(block.answer) }}
+                    />
                   </div>
                 )
               }
