@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
   const buffer = Buffer.from(await file.arrayBuffer())
 
   const { error } = await supabase.storage
-    .from('blog-images')
+    .from('Blog_images')
     .upload(fileName, buffer, { contentType: file.type, upsert: false })
 
   if (error) {
@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Upload failed: ' + error.message }, { status: 500 })
   }
 
-  const { data: { publicUrl } } = supabase.storage.from('blog-images').getPublicUrl(fileName)
+  const { data: { publicUrl } } = supabase.storage.from('Blog_images').getPublicUrl(fileName)
 
   return NextResponse.json({ url: publicUrl })
 }
