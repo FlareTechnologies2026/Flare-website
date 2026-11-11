@@ -3,6 +3,22 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import type { CaseStudy } from '@/lib/caseStore'
 import type { BlogPost, ContentBlock } from '@/lib/blogStore'
+import type { Vacancy } from '@/lib/vacancyStore'
+import type { Application } from '@/lib/applicationStore'
+
+// ── Vacancy form ──
+interface VacancyForm {
+  title: string; department: string; location: string; type: string
+  experience: string; salary: string; about_role: string
+  responsibilities: string; qualifications: string; nice_to_have: string
+  benefits: string; apply_link: string; open: boolean
+}
+const emptyVacancyForm: VacancyForm = {
+  title: '', department: '', location: '', type: 'Full-time',
+  experience: '', salary: '', about_role: '', responsibilities: '',
+  qualifications: '', nice_to_have: '', benefits: '',
+  apply_link: 'mailto:marketing@flaretechnologies.in', open: true,
+}
 
 // ── Case form ──
 interface CaseForm {
@@ -29,7 +45,7 @@ export default function AdminPage() {
   const [checking, setChecking] = useState(true)
   const [password, setPassword] = useState('')
   const [loginError, setLoginError] = useState('')
-  const [tab, setTab] = useState<'cases' | 'blog'>('cases')
+  const [tab, setTab] = useState<'cases' | 'blog' | 'vacancies' | 'applications'>('cases')
 
   const [cases, setCases] = useState<CaseStudy[]>([])
   const [editingCase, setEditingCase] = useState<CaseStudy | null>(null)
@@ -40,6 +56,19 @@ export default function AdminPage() {
   const [blogForm, setBlogForm] = useState<BlogForm>(emptyBlogForm)
   const [uploadingImg, setUploadingImg] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const [vacancies, setVacancies] = useState<Vacancy[]>([])
+  const [editingVacancy, setEditingVacancy] = useState<Vacancy | null>(null)
+  const [vacancyForm, setVacancyForm] = useState<VacancyForm>(emptyVacancyForm)
+
+  const [applications, setApplications] = useState<Application[]>([])
+  const [viewingPdf, setViewingPdf] = useState<Application | null>(null)
+  const [appFilter, setAppFilter] = useState<string>('all') // 'all' or vacancy_id
+
+  const [applications, setApplications] = useState<Application[]>([])
+  const [viewingResume, setViewingResume] = useState<Application | null>(null)
+  const [appFilter, setAppFilter] = useState<string>('all')
+  const [deletingApp, setDeletingApp] = useState<string | null>(null)
 
   const [saving, setSaving] = useState(false)
   const [message, setMessage] = useState('')
@@ -62,9 +91,19 @@ export default function AdminPage() {
     if (r.ok) setPosts(await r.json())
   }, [])
 
+  const loadVacancies = useCallback(async () => {
+    const r = await fetch('/api/vacancies')
+    if (r.ok) setVacancies(await r.json())
+  }, [])
+
+  const loadApplications = useCallback(async () => {
+    const r = await fetch('/api/applications')
+    if (r.ok) setApplications(await r.json())
+  }, [])
+
   useEffect(() => {
-    if (authed) { loadCases(); loadPosts() }
-  }, [authed, loadCases, loadPosts])
+    if (authed) { loadCases(); loadPosts(); loadVacancies(); loadApplications() }
+  }, [authed, loadCases, loadPosts, loadVacancies, loadApplications])
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault(); setLoginError('')
@@ -78,7 +117,7 @@ export default function AdminPage() {
 
   const handleLogout = async () => {
     await fetch('/api/admin/logout', { method: 'POST' })
-    setAuthed(false); setCases([]); setPosts([])
+    setAuthed(false); setCases([]); setPosts([]); setVacancies([]); setApplications([])
   }
 
   // ── Image upload ──
@@ -216,6 +255,56 @@ export default function AdminPage() {
     if (r.ok) { await loadPosts(); setMessage('Post deleted.') }
   }
 
+  // ── Application handlers ──
+  const handleDeleteApplication = async (id: string) => {
+    if (!confirm('Delete this application? This cannot be undone.')) return
+    const r = await fetch(`/api/applications/${id}`, { method: 'DELETE' })
+    if (r.ok) { await loadApplications(); setMessage('Application deleted.') }
+  }
+
+  // ── Vacancy handlers ──  const startNewVacancy = () => { setEditingVacancy(null); setVacancyForm(emptyVacancyForm); setMessage('') }
+  const startEditVacancy = (v: Vacancy) => {
+    setEditingVacancy(v)
+    setVacancyForm({
+      title: v.title, department: v.department, location: v.location, type: v.type,
+      experience: v.experience, salary: v.salary, about_role: v.about_role,
+      responsibilities: v.responsibilities, qualifications: v.qualifications,
+      nice_to_have: v.nice_to_have, benefits: v.benefits, apply_link: v.apply_link, open: v.open,
+    })
+    setMessage(''); window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+  const handleSaveVacancy = async (e: React.FormEvent) => {
+    e.preventDefault(); setSaving(true); setMessage('')
+    const payload = { ...vacancyForm }
+    try {
+      const r = editingVacancy
+        ? await fetch(`/api/vacancies/${editingVacancy.id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+        : await fetch('/api/vacancies', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+      if (r.ok) {
+        setMessage(editingVacancy ? 'Vacancy updated.' : 'Vacancy posted.')
+        setEditingVacancy(null); setVacancyForm(emptyVacancyForm); await loadVacancies()
+      } else {
+        const err = await r.json(); setMessage(err.error || 'Something went wrong.')
+      }
+    } catch { setMessage('Network error.') }
+    setSaving(false)
+  }
+  const handleDeleteVacancy = async (id: string) => {
+    if (!confirm('Delete this vacancy?')) return
+    const r = await fetch(`/api/vacancies/${id}`, { method: 'DELETE' })
+    if (r.ok) { await loadVacancies(); setMessage('Vacancy deleted.') }
+  }
+
+  // ── Application handlers ──
+  const handleDeleteApplication = async (id: string) => {
+    if (!confirm('Delete this application? This cannot be undone.')) return
+    setDeletingApp(id)
+    const r = await fetch(`/api/applications/${id}`, { method: 'DELETE' })
+    if (r.ok) { await loadApplications(); setMessage('Application deleted.') }
+    setDeletingApp(null)
+    if (viewingResume?.id === id) setViewingResume(null)
+  }
+
   // ── Loading ──
   if (checking) return (
     <div style={{ minHeight: '100vh', display: 'grid', placeItems: 'center', background: '#0B0E12', color: '#fff' }}>
@@ -257,15 +346,15 @@ export default function AdminPage() {
         </div>
 
         {/* Tabs */}
-        <div style={{ display: 'flex', gap: 4, marginBottom: 32, borderBottom: '1px solid #353D47' }}>
-          {(['cases', 'blog'] as const).map(t => (
+        <div style={{ display: 'flex', gap: 4, marginBottom: 32, borderBottom: '1px solid #353D47', overflowX: 'auto' }}>
+          {(['cases', 'blog', 'vacancies', 'applications'] as const).map(t => (
             <button key={t} onClick={() => { setTab(t); setMessage('') }} style={{
-              padding: '10px 20px', background: 'none', border: 'none',
+              padding: '10px 20px', background: 'none', border: 'none', whiteSpace: 'nowrap',
               borderBottom: tab === t ? '2px solid #FA4D12' : '2px solid transparent',
               color: tab === t ? '#fff' : '#8A95A3', fontSize: 15, fontWeight: 600,
               cursor: 'pointer', marginBottom: -1,
             }}>
-              {t === 'cases' ? '📊 Case Studies' : '✍️ Blog Posts'}
+              {t === 'cases' ? '📊 Case Studies' : t === 'blog' ? '✍️ Blog Posts' : t === 'vacancies' ? '💼 Vacancies' : `📥 Applications${applications.length ? ` (${applications.length})` : ''}`}
             </button>
           ))}
         </div>
@@ -521,6 +610,201 @@ export default function AdminPage() {
             </div>
           </>
         )}
+
+        {/* ── VACANCIES ── */}
+        {tab === 'vacancies' && (
+          <>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 20 }}>
+              <button onClick={startNewVacancy} style={btnPrimary}>+ Post a vacancy</button>
+            </div>
+
+            <form onSubmit={handleSaveVacancy} style={{ ...cardStyle, marginBottom: 32 }}>
+              <h2 style={{ fontSize: 18, marginBottom: 24 }}>{editingVacancy ? `Editing: ${editingVacancy.title}` : 'Post a new vacancy'}</h2>
+
+              {/* Title */}
+              <label style={labelStyle}>Job title <span style={{ color: '#F4140C' }}>*</span></label>
+              <input
+                value={vacancyForm.title}
+                onChange={e => setVacancyForm(f => ({ ...f, title: e.target.value }))}
+                placeholder="e.g. Growth Marketing Executive"
+                style={inputStyle}
+                required
+              />
+
+              {/* Department / Location / Type */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
+                <div>
+                  <label style={labelStyle}>Department</label>
+                  <input
+                    value={vacancyForm.department}
+                    onChange={e => setVacancyForm(f => ({ ...f, department: e.target.value }))}
+                    placeholder="e.g. Growth, Engineering"
+                    style={inputStyle}
+                  />
+                </div>
+                <div>
+                  <label style={labelStyle}>Location</label>
+                  <input
+                    value={vacancyForm.location}
+                    onChange={e => setVacancyForm(f => ({ ...f, location: e.target.value }))}
+                    placeholder="e.g. Bengaluru / Remote"
+                    style={inputStyle}
+                  />
+                </div>
+                <div>
+                  <label style={labelStyle}>Employment type</label>
+                  <select
+                    value={vacancyForm.type}
+                    onChange={e => setVacancyForm(f => ({ ...f, type: e.target.value }))}
+                    style={inputStyle}
+                  >
+                    <option value="">Select type</option>
+                    <option>Full-time</option>
+                    <option>Part-time</option>
+                    <option>Contract</option>
+                    <option>Internship</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Experience / Salary */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                <div>
+                  <label style={labelStyle}>Experience required</label>
+                  <input
+                    value={vacancyForm.experience}
+                    onChange={e => setVacancyForm(f => ({ ...f, experience: e.target.value }))}
+                    placeholder="e.g. 1–3 years, Fresher welcome"
+                    style={inputStyle}
+                  />
+                </div>
+                <div>
+                  <label style={labelStyle}>Salary range</label>
+                  <input
+                    value={vacancyForm.salary}
+                    onChange={e => setVacancyForm(f => ({ ...f, salary: e.target.value }))}
+                    placeholder="e.g. ₹4–6 LPA or Competitive"
+                    style={inputStyle}
+                  />
+                </div>
+              </div>
+
+              {/* About the role */}
+              <label style={labelStyle}>About the role</label>
+              <textarea
+                value={vacancyForm.about_role}
+                onChange={e => setVacancyForm(f => ({ ...f, about_role: e.target.value }))}
+                placeholder="2–3 sentences describing what this person will do and why it matters."
+                rows={3}
+                style={{ ...inputStyle, resize: 'vertical' }}
+              />
+
+              {/* Responsibilities */}
+              <label style={labelStyle}>What you&apos;ll do</label>
+              <textarea
+                value={vacancyForm.responsibilities}
+                onChange={e => setVacancyForm(f => ({ ...f, responsibilities: e.target.value }))}
+                placeholder={"- Run outreach campaigns on LinkedIn and email\n- Track reply rates and meeting rates weekly\n- Work with the sales team to book qualified meetings"}
+                rows={6}
+                style={{ ...inputStyle, resize: 'vertical' }}
+              />
+              <p style={hintStyle}>One item per line. Start each with – or just write it plain.</p>
+
+              {/* Qualifications */}
+              <label style={labelStyle}>What we&apos;re looking for</label>
+              <textarea
+                value={vacancyForm.qualifications}
+                onChange={e => setVacancyForm(f => ({ ...f, qualifications: e.target.value }))}
+                placeholder={"- Strong written English\n- Understanding of B2B sales\n- Comfortable with LinkedIn and cold email"}
+                rows={5}
+                style={{ ...inputStyle, resize: 'vertical' }}
+              />
+              <p style={hintStyle}>One item per line. Leave blank if not needed.</p>
+
+              {/* Nice to have */}
+              <label style={labelStyle}>Nice to have</label>
+              <textarea
+                value={vacancyForm.nice_to_have}
+                onChange={e => setVacancyForm(f => ({ ...f, nice_to_have: e.target.value }))}
+                placeholder={"- Experience with Sales Navigator\n- Previous startup experience"}
+                rows={4}
+                style={{ ...inputStyle, resize: 'vertical' }}
+              />
+              <p style={hintStyle}>Bonus skills — not required. Leave blank to hide this section.</p>
+
+              {/* Benefits */}
+              <label style={labelStyle}>What you get</label>
+              <textarea
+                value={vacancyForm.benefits}
+                onChange={e => setVacancyForm(f => ({ ...f, benefits: e.target.value }))}
+                placeholder={"- Real client work from day one\n- Mentoring from the people doing the work\n- Fast growth in a small, ambitious team"}
+                rows={4}
+                style={{ ...inputStyle, resize: 'vertical' }}
+              />
+              <p style={hintStyle}>Perks and benefits. Leave blank to hide this section.</p>
+
+              {/* Apply link */}
+              <label style={labelStyle}>Apply link or email</label>
+              <input
+                value={vacancyForm.apply_link}
+                onChange={e => setVacancyForm(f => ({ ...f, apply_link: e.target.value }))}
+                placeholder="mailto:marketing@flaretechnologies.in or https://forms.gle/..."
+                style={inputStyle}
+              />
+              <p style={hintStyle}>Use mailto: for email, or paste a form URL. Leave blank to hide the apply button.</p>
+
+              {/* Open toggle */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 8 }}>
+                <label style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer', fontSize: 15, color: '#fff' }}>
+                  <input
+                    type="checkbox"
+                    checked={vacancyForm.open}
+                    onChange={e => setVacancyForm(f => ({ ...f, open: e.target.checked }))}
+                    style={{ width: 18, height: 18, accentColor: '#34C283' }}
+                  />
+                  List this vacancy on the careers page
+                </label>
+              </div>
+
+              <div style={{ display: 'flex', gap: 12, marginTop: 24 }}>
+                <button type="submit" disabled={saving} style={btnPrimary}>
+                  {saving ? 'Saving…' : editingVacancy ? 'Update vacancy' : vacancyForm.open ? 'Post vacancy' : 'Save (hidden)'}
+                </button>
+                {editingVacancy && <button type="button" onClick={startNewVacancy} style={btnGhost}>Cancel</button>}
+              </div>
+            </form>
+
+            {/* Vacancies list */}
+            <h2 style={{ fontSize: 18, marginBottom: 16 }}>All vacancies ({vacancies.length})</h2>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {vacancies.map(v => (
+                <div key={v.id} style={{ ...cardStyle, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
+                      <p style={{ fontWeight: 600, fontSize: 15, margin: 0 }}>{v.title}</p>
+                      <span style={{
+                        fontSize: 11, padding: '2px 8px', borderRadius: 999, fontWeight: 600,
+                        background: v.open ? 'rgba(52,194,131,.15)' : 'rgba(138,149,163,.15)',
+                        color: v.open ? '#34C283' : '#8A95A3',
+                      }}>
+                        {v.open ? 'Live' : 'Hidden'}
+                      </span>
+                    </div>
+                    <p style={{ color: '#8A95A3', fontSize: 13, margin: 0 }}>
+                      {[v.department, v.location, v.type, v.experience].filter(Boolean).join(' · ')}
+                    </p>
+                  </div>
+                  <div style={{ display: 'flex', gap: 8 }}>
+                    <button onClick={() => startEditVacancy(v)} style={btnGhostSmall}>Edit</button>
+                    <button onClick={() => handleDeleteVacancy(v.id)} style={btnDangerSmall}>Delete</button>
+                  </div>
+                </div>
+              ))}
+              {vacancies.length === 0 && <p style={{ color: '#8A95A3', fontSize: 14 }}>No vacancies yet. Post your first one above.</p>}
+            </div>
+          </>
+        )}
+
       </div>
     </div>
   )
