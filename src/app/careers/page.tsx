@@ -11,6 +11,8 @@ export const metadata: Metadata = {
   openGraph: { title: page.title, description: page.desc, images: ['/assets/og-image.png'] },
 }
 
+export const revalidate = 0 // never cache — always fetch fresh from Supabase
+
 export default async function CareersPage() {
   const vacancies = await getVacancies(true) // only open roles
   return <CareersClient page={page} vacancies={vacancies} />
