@@ -211,7 +211,6 @@ function ApplyModal({ vacancy, onClose }: ApplyModalProps) {
               style={{ display: 'none' }}
             />
             <label htmlFor="ap-resume" className="apply-file-label">
-              <span className="apply-file-icon">📄</span>
               <span className="apply-file-text">
                 {fileName ? fileName : 'Click to upload PDF (max 5 MB)'}
               </span>
@@ -254,7 +253,7 @@ function VacancyCard({ v, onApply }: { v: Vacancy; onApply: (v: Vacancy) => void
             {v.location && (
               <>
                 {v.department && <span className="vacancy-sep">·</span>}
-                <span className="vacancy-loc">📍 {v.location}</span>
+                <span className="vacancy-loc">{v.location}</span>
               </>
             )}
           </div>
@@ -270,8 +269,8 @@ function VacancyCard({ v, onApply }: { v: Vacancy; onApply: (v: Vacancy) => void
       </div>
 
       <div className="vacancy-tags">
-        {v.experience && <span className="vacancy-tag">🕐 {v.experience}</span>}
-        {v.salary     && <span className="vacancy-tag">💰 {v.salary}</span>}
+        {v.experience && <span className="vacancy-tag">{v.experience}</span>}
+        {v.salary     && <span className="vacancy-tag">{v.salary}</span>}
       </div>
 
       {v.about_role && <p className="vacancy-about">{v.about_role}</p>}
