@@ -15,14 +15,12 @@ export const metadata: Metadata = {
   openGraph: {
     images: ['/assets/og-image.png'],
   },
-  verification: {
-    google: 'QOpyeAYh01vxPWl1W0MmVlaongmHrn_Ejlfv9iYKiAA',
-  },
 }
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
+        <meta name="google-site-verification" content="QOpyeAYh01vxPWl1W0MmVlaongmHrn_Ejlfv9iYKiAA" />
         <link rel="icon" href="/assets/favicon.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
